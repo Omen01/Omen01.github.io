@@ -3,6 +3,7 @@ accel
 adieu
 aegis
 agnes
+ailyn
 ahiru
 airan
 aiura
@@ -30,6 +31,7 @@ anime
 anzio
 april
 arale
+araya
 arete
 ariel
 arion
@@ -99,6 +101,7 @@ dante
 dchen
 death
 deity
+dekai
 della
 demon
 dence
@@ -107,6 +110,8 @@ derby
 devil
 diary
 doesn
+dodai
+dokku
 dolls
 donna
 dorei
@@ -117,6 +122,7 @@ dream
 dress
 dwarf
 eater
+ebisu
 ecchi
 edens
 eiken
@@ -137,6 +143,7 @@ exile
 fable
 fairy
 festa
+flame
 frame
 franz
 freak
@@ -209,6 +216,8 @@ jango
 japan
 jewel
 jinki
+johan
+jojos
 jolie
 jolly
 jonin
@@ -251,6 +260,8 @@ kiddy
 kidou
 kikou
 kimba
+kiria
+kirie
 kitan
 kitty
 kochi
@@ -258,6 +269,7 @@ kocho
 kodou
 kouga
 kreuz
+kuina
 kuppa
 kurau
 kyoko
@@ -273,6 +285,7 @@ leina
 level
 licca
 liebe
+light
 logos
 lords
 loups
@@ -296,6 +309,7 @@ maria
 marie
 marin
 maris
+masao
 matoi
 maxim
 mecha
@@ -327,6 +341,7 @@ musha
 mushi
 music
 musou
+muzan
 mytyl
 nadia
 nadja
@@ -367,6 +382,7 @@ otaku
 otogi
 otome
 ouran
+ozaki
 ozuma
 paboo
 palme
@@ -467,9 +483,11 @@ seton
 seven
 shall
 shana
+shell
 shiki
 shion
 shiro
+shizu
 showa
 shura
 sidem
@@ -482,13 +500,17 @@ solty
 songs
 sorai
 soran
+sound
 spell
 spica
+spike
 spyce
 squid
+stone
 story
 suite
 super
+swamp
 sweet
 swiss
 sword
@@ -568,7 +590,10 @@ zorro
 zoshi
 acchi
 agasa
+ageha
 aizen
+akari
+akaza
 akemi
 akito
 akuma
@@ -577,6 +602,8 @@ allen
 amane
 amano
 amata
+amayo
+ameno
 amuro
 aoshi
 arika
@@ -611,6 +638,7 @@ bulma
 camie
 celty
 chara
+chino
 chise
 chito
 chiyo
@@ -657,6 +685,7 @@ ganju
 gasai
 gelus
 gendo
+genya
 ginji
 ginko
 gohan
@@ -666,6 +695,7 @@ gotei
 goten
 grell
 gurio
+gyuki
 hange
 hangs
 heero
@@ -697,18 +727,23 @@ jaken
 james
 jenos
 jigen
+jikuu
 jinta
+jinya
 jirou
 joins
 judai
 junko
 junta
+junya
 jutsu
+juuro
 juvia
 kaban
 kaede
 kalos
 kambe
+kanao
 kanna
 kaori
 karna
@@ -719,6 +754,7 @@ konan
 korra
 kureo
 kusuo
+kyogo
 lacus
 lambo
 laxus
@@ -731,6 +767,7 @@ machi
 mafia
 malak
 manji
+makio
 maruo
 mason
 mikan
@@ -808,10 +845,13 @@ stein
 sugou
 syaro
 takeo
+tatsu
+teiko
 tenma
 tenoh
 tenya
 tohru
+tokie
 tomoe
 tooru
 toppa
@@ -839,12 +879,15 @@ wenge
 werec
 winry
 xenos
+yatsu
 yayoi
 yifan
 youjo
+yuima
 yusei
 yuuki
 zange
 zelos
 zeref
+zofia
 zonge
