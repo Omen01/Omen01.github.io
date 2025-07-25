@@ -3,8 +3,8 @@
 <head>
     <title>Anime Wordle</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; height: 100vh; overflow: hidden; background: #2c2f33; display: flex; justify-content: center; }
-        .container { display: flex; flex-direction: row; align-items: flex-start; width: 1000px; margin: 0 auto; } /* Fixed width and centered */
+        body { font-family: Arial, sans-serif; margin: 0; height: 100vh; overflow: hidden; background: #2c2f33; display: flex; justify-content: flex-end; } /* Shift everything to the right */
+        .container { display: flex; flex-direction: row-reverse; align-items: flex-start; width: 1000px; margin-left: 20px; } /* Reverse row and add left margin */
         .game-area { display: flex; flex-direction: column; align-items: center; width: 600px; } /* Fixed width for game area */
         .grid { display: grid; grid-template-columns: repeat(5, 50px); gap: 5px; margin: 20px 0; }
         .tile { width: 50px; height: 50px; border: 2px solid #ccc; text-align: center; line-height: 50px; font-size: 20px; }
@@ -21,7 +21,7 @@
         .key.yellow { background: #c9b458; color: white; }
         .key.gray { background: #787c7e; color: white; }
         #score { color: white; margin: 10px; font-weight: bold; }
-        .progress-area { display: flex; flex-direction: column; align-items: center; margin-left: 40px; } /* Adjusted spacing */
+        .progress-area { display: flex; flex-direction: column; align-items: center; margin-right: 20px; } /* Adjusted spacing */
         .progress-grid { display: grid; grid-template-columns: repeat(5, 50px); gap: 5px; }
         .progress-tile { width: 50px; height: 50px; border: 2px solid #ccc; text-align: center; line-height: 50px; font-size: 20px; background: #444; color: white; }
         #hintButton:disabled { opacity: 0.5; cursor: not-allowed; }
@@ -237,7 +237,7 @@
         function updateHintButton(greenCount) {
             const hintButton = document.getElementById('hintButton');
             if (attempts === 3 && greenCount === 3 && hintsUsed === 0) {
-                hintButton.disabled = false; // Enable hint after 3 guesses with 3 greens
+                hintButton.disabled = false; // Enable first hint after 3 guesses with 3 greens
             } else if (attempts === 5 && greenCount < 4 && hintsUsed === 1) {
                 hintButton.disabled = false; // Enable second hint after 5 guesses with < 4 greens
             } else if (hintsUsed >= 2) {
