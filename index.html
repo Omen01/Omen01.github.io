@@ -12,26 +12,24 @@
         .gray { background: #787c7e; color: white; border-color: #787c7e; }
         #guessInput { margin: 10px; padding: 5px; font-size: 16px; }
         button { padding: 5px 10px; font-size: 16px; margin: 5px; }
-        #message { color: white; margin: 10px; }
-        .keyboard { margin-top: 10px; }
+        #message { color: white; margin: 20px 0; font-size: 24px; font-weight: bold; text-align: center; } /* Moved above keyboard, enlarged */
+        .keyboard { margin-top: 20px; } /* Lowered slightly to accommodate message */
         .keyboard-row { display: flex; gap: 5px; margin-bottom: 5px; }
         .key { width: 30px; height: 40px; border: 1px solid #ccc; text-align: center; line-height: 40px; background: #fff; cursor: pointer; }
         .key.green { background: #6aaa64; color: white; }
         .key.yellow { background: #c9b458; color: white; }
         .key.gray { background: #787c7e; color: white; }
-        #score { color: white; margin: 10px; font-weight: bold; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Anime Wordle</h1>
-        <div id="score">Score: 0</div>
         <div class="grid" id="gameGrid"></div>
         <input type="text" id="guessInput" maxlength="5" placeholder="Enter 5-letter word">
         <button id="guessButton">Guess</button>
         <button id="playAgainButton" style="display: none;">Play Again</button>
+        <p id="message"></p> <!-- Moved above keyboard -->
         <div class="keyboard" id="keyboard"></div>
-        <p id="message"></p>
     </div>
 
     <script>
@@ -42,7 +40,6 @@
         let maxAttempts = 6;
         let message = null;
         let keyboard = {};
-        let score = 0; // Track consecutive wins
 
         // Fetch words.txt and initialize game
         fetch('words.txt')
@@ -61,7 +58,6 @@
                 secret = words[Math.floor(Math.random() * words.length)];
                 grid = document.getElementById('gameGrid');
                 message = document.getElementById('message');
-                document.getElementById('score').textContent = `Score: ${score}`; // Initialize score display
                 createGrid();
                 createKeyboard();
                 // Add event listeners
@@ -155,13 +151,9 @@
             attempts++;
             if (input === secret) {
                 message.textContent = `You win! Word was ${secret}. Attempts: ${attempts}`;
-                score++; // Increment score on win
-                document.getElementById('score').textContent = `Score: ${score}`;
                 document.getElementById('playAgainButton').style.display = 'block';
             } else if (attempts === maxAttempts) {
                 message.textContent = `Game over! Word was ${secret}`;
-                score = 0; // Reset score on loss
-                document.getElementById('score').textContent = `Score: ${score}`;
                 document.getElementById('playAgainButton').style.display = 'block';
             }
             document.getElementById('guessInput').value = '';
