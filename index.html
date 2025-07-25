@@ -136,7 +136,7 @@
             }
             const input = document.getElementById('guessInput').value.toUpperCase();
             if (input.length !== 5 || !words.includes(input)) {
-                message.textContent = 'Invalid 5-letter word!';
+                message.textContent = 'Guess an actual word next time';
                 return;
             }
             const tiles = grid.children;
@@ -162,13 +162,13 @@
             updateKeyboard(input, feedback);
             attempts++;
             if (input === secret) {
-                message.textContent = `You win! Word was ${secret}. Attempts: ${attempts}`;
+                message.textContent = `Actual Dweeb! You got the answer ${secret}. Attempts: ${attempts}`;
                 score++; // Increment score on win
                 document.getElementById('score').textContent = `Score: ${score}`;
                 gameEnded = true; // Set game end flag
                 document.getElementById('playAgainButton').style.display = 'block';
             } else if (attempts === maxAttempts) {
-                message.textContent = `Game over! Word was ${secret}`;
+                message.textContent = `LOL! Try again next time! Word was ${secret}`;
                 score = 0; // Reset score on loss
                 document.getElementById('score').textContent = `Score: ${score}`;
                 gameEnded = true; // Set game end flag
@@ -181,7 +181,7 @@
             attempts = 0;
             gameEnded = false; // Reset game end flag
             secret = words[Math.floor(Math.random() * words.length)];
-            message.textContent = 'New game started! Guess a 5-letter word.';
+            message.textContent = 'New game started! Good Luck, Degen.';
             document.getElementById('playAgainButton').style.display = 'none';
             createGrid();
             // Reset keyboard states
