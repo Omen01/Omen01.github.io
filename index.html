@@ -4,8 +4,8 @@
     <title>Anime Wordle</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 0; height: 100vh; overflow: hidden; background: #2c2f33; display: flex; justify-content: center; }
-        .container { display: flex; flex-direction: row; align-items: flex-start; width: 100%; max-width: 1200px; } /* Limit width and center content */
-        .game-area { display: flex; flex-direction: column; align-items: center; flex-grow: 1; margin-right: 20px; } /* Center game content */
+        .container { display: flex; flex-direction: row; align-items: flex-start; width: 100%; max-width: 1200px; justify-content: center; } /* Center the row content */
+        .game-area { display: flex; flex-direction: column; align-items: center; flex: 1; margin-right: 40px; } /* Increased margin for spacing */
         .grid { display: grid; grid-template-columns: repeat(5, 50px); gap: 5px; margin: 20px 0; }
         .tile { width: 50px; height: 50px; border: 2px solid #ccc; text-align: center; line-height: 50px; font-size: 20px; }
         .green { background: #6aaa64; color: white; border-color: #6aaa64; }
@@ -21,7 +21,7 @@
         .key.yellow { background: #c9b458; color: white; }
         .key.gray { background: #787c7e; color: white; }
         #score { color: white; margin: 10px; font-weight: bold; }
-        .progress-area { margin-left: 20px; }
+        .progress-area { display: flex; flex-direction: column; align-items: center; }
         .progress-grid { display: grid; grid-template-columns: repeat(5, 50px); gap: 5px; }
         .progress-tile { width: 50px; height: 50px; border: 2px solid #ccc; text-align: center; line-height: 50px; font-size: 20px; background: #444; color: white; }
     </style>
