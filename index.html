@@ -12,8 +12,8 @@
         .gray { background: #787c7e; color: white; border-color: #787c7e; }
         #guessInput { margin: 10px; padding: 5px; font-size: 16px; }
         button { padding: 5px 10px; font-size: 16px; margin: 5px; }
-        #message { color: white; margin: 20px 0; font-size: 24px; font-weight: bold; text-align: center; } /* Moved above keyboard, enlarged */
-        .keyboard { margin-top: 20px; } /* Lowered slightly to accommodate message */
+        #message { color: white; margin: 20px 0; font-size: 24px; font-weight: bold; text-align: center; }
+        .keyboard { margin-top: 20px; }
         .keyboard-row { display: flex; gap: 5px; margin-bottom: 5px; }
         .key { width: 30px; height: 40px; border: 1px solid #ccc; text-align: center; line-height: 40px; background: #fff; cursor: pointer; }
         .key.green { background: #6aaa64; color: white; }
@@ -25,10 +25,10 @@
     <div class="container">
         <h1>Anime Wordle</h1>
         <div class="grid" id="gameGrid"></div>
-        <input type="text" id="guessInput" maxlength="5" placeholder="Enter 5-letter word">
+        <input type="text" id="guessInput" maxlength="5" placeholder="Enter 5-letter word" autofocus>
         <button id="guessButton">Guess</button>
         <button id="playAgainButton" style="display: none;">Play Again</button>
-        <p id="message"></p> <!-- Moved above keyboard -->
+        <p id="message"></p>
         <div class="keyboard" id="keyboard"></div>
     </div>
 
@@ -66,6 +66,12 @@
                 });
                 document.getElementById('guessButton').addEventListener('click', makeGuess);
                 document.getElementById('playAgainButton').addEventListener('click', playAgain);
+                // Add Enter key listener for Play Again
+                document.addEventListener('keyup', (event) => {
+                    if (event.key === 'Enter' && document.getElementById('playAgainButton').style.display !== 'none') {
+                        playAgain();
+                    }
+                });
             })
             .catch(error => {
                 console.error('Error loading words.txt:', error);
