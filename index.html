@@ -71,11 +71,11 @@
                 });
                 document.getElementById('guessButton').addEventListener('click', makeGuess);
                 document.getElementById('playAgainButton').addEventListener('click', playAgain);
-                // Add Enter key listener for Play Again only after explicit game end
-                document.addEventListener('keyup', (event) => {
-                    const playAgainButton = document.getElementById('playAgainButton');
-                    if (event.key === 'Enter' && playAgainButton.style.display === 'block' && !document.getElementById('guessInput').value) {
+                // Add Shift+Enter for Play Again after game end
+                document.addEventListener('keydown', (event) => {
+                    if (event.key === 'Enter' && event.shiftKey && gameEnded) {
                         playAgain();
+                        event.preventDefault(); // Prevent default Enter behavior
                     }
                 });
             })
@@ -136,7 +136,7 @@
             }
             const input = document.getElementById('guessInput').value.toUpperCase();
             if (input.length !== 5 || !words.includes(input)) {
-                message.textContent = 'Guess an actual word next time';
+                message.textContent = 'Guess an actual word next time...';
                 return;
             }
             const tiles = grid.children;
