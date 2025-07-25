@@ -3,8 +3,8 @@
 <head>
     <title>Anime Wordle</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; height: 100vh; overflow: hidden; background: #2c2f33; display: flex; justify-content: center; padding-left: 410px; } /* Increased right shift by 10px */
-        .container { display: flex; flex-direction: row; align-items: flex-start; width: 1000px; margin: 0 auto; } /* Center within the shifted body */
+        body { font-family: Arial, sans-serif; margin: 0; height: 100vh; overflow: hidden; background: #2c2f33; display: flex; justify-content: center; padding-left: 410px; }
+        .container { display: flex; flex-direction: row; align-items: flex-start; width: 1000px; margin: 0 auto; }
         .game-area { display: flex; flex-direction: column; align-items: center; width: 600px; }
         .grid { display: grid; grid-template-columns: repeat(5, 50px); gap: 5px; margin: 20px 0; }
         .tile { width: 50px; height: 50px; border: 2px solid #ccc; text-align: center; line-height: 50px; font-size: 20px; }
@@ -35,7 +35,7 @@
             <div class="grid" id="gameGrid"></div>
             <input type="text" id="guessInput" maxlength="5" placeholder="Enter 5-letter word" autofocus>
             <button id="guessButton">Guess</button>
-            <button id="playAgainButton" style="display: none;">Play Again</button>
+            <button id="playAgainButton" style="display: none">Play Again</button>
             <p id="message"></p>
             <div class="keyboard" id="keyboard"></div>
         </div>
@@ -183,8 +183,8 @@
                     feedback.push(`🟩 ${input[i]}`);
                     tile.className = 'tile green';
                     secretList[i] = null;
-                    if (!progress[i]) progress[i] = input[i]; // Update progress if not set
-                    greenCount++;
+                    progress[i] = input[i]; // Update progress for all green matches
+                    greenCount++; // Increment green count for each match
                 } else if (secretList.includes(input[i])) {
                     feedback.push(`🟨 ${input[i]}`);
                     tile.className = 'tile yellow';
@@ -195,6 +195,7 @@
                 }
                 tile.textContent = input[i];
             }
+            console.log(`Attempt ${attempts}, Green Count: ${greenCount}, Feedback: ${feedback}, Progress: ${progress}`);
             updateKeyboard(input, feedback);
             updateProgressGrid();
             attempts++;
@@ -236,12 +237,13 @@
 
         function updateHintButton(greenCount) {
             const hintButton = document.getElementById('hintButton');
-            if (attempts === 3 && greenCount === 3 && hintsUsed === 0) {
+            console.log(`Attempts: ${attempts}, Green Count: ${greenCount}, Hints Used: ${hintsUsed}, Game Ended: ${gameEnded}`);
+            if (attempts === 3 && greenCount === 3 && hintsUsed === 0 && !gameEnded) {
                 hintButton.disabled = false; // Enable first hint after 3 guesses with 3 greens
-            } else if (attempts === 5 && greenCount < 4 && hintsUsed === 1) {
+            } else if (attempts === 5 && greenCount < 4 && hintsUsed === 1 && !gameEnded) {
                 hintButton.disabled = false; // Enable second hint after 5 guesses with < 4 greens
-            } else if (hintsUsed >= 2) {
-                hintButton.disabled = true; // Disable after 2 hints
+            } else if (hintsUsed >= 2 || gameEnded) {
+                hintButton.disabled = true; // Disable after 2 hints or game end
             } else {
                 hintButton.disabled = true; // Disable otherwise
             }
