@@ -67,13 +67,14 @@
                 createKeyboard();
                 // Add event listeners
                 document.getElementById('guessInput').addEventListener('keyup', (event) => {
-                    if (event.key === 'Enter' && !gameEnded) makeGuess(); // Enter for guessing only if game not ended
+                    if (event.key === 'Enter' && attempts < maxAttempts) makeGuess(); // Enter for guessing only if under max attempts
                 });
                 document.getElementById('guessButton').addEventListener('click', makeGuess);
                 document.getElementById('playAgainButton').addEventListener('click', playAgain);
-                // Add Enter key listener for Play Again only after game end
+                // Add Enter key listener for Play Again only after explicit game end
                 document.addEventListener('keyup', (event) => {
-                    if (event.key === 'Enter' && gameEnded) {
+                    const playAgainButton = document.getElementById('playAgainButton');
+                    if (event.key === 'Enter' && playAgainButton.style.display === 'block' && !document.getElementById('guessInput').value) {
                         playAgain();
                     }
                 });
