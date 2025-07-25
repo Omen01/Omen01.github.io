@@ -410,7 +410,10 @@ pupil
 pupio
 pycal
 pyuta
+queen
 quest
+quiet
+quill
 ramen
 rampo
 ranbu
@@ -573,6 +576,7 @@ yokai
 yokoo
 yonna
 youko
+young
 yucie
 yuria
 yuuna
@@ -626,6 +630,7 @@ barry
 batou
 belia
 benno
+beryl
 blair
 blanc
 blois
