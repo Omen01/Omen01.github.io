@@ -3,9 +3,9 @@
 <head>
     <title>Anime Wordle</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; height: 100vh; overflow: hidden; background: #2c2f33; display: flex; flex-direction: column; align-items: center; }
-        .container { flex-grow: 1; display: flex; flex-direction: row; align-items: flex-start; }
-        .game-area { display: flex; flex-direction: column; align-items: center; }
+        body { font-family: Arial, sans-serif; margin: 0; height: 100vh; overflow: hidden; background: #2c2f33; display: flex; justify-content: center; }
+        .container { display: flex; flex-direction: row; align-items: flex-start; width: 100%; max-width: 1200px; } /* Limit width and center content */
+        .game-area { display: flex; flex-direction: column; align-items: center; flex-grow: 1; margin-right: 20px; } /* Center game content */
         .grid { display: grid; grid-template-columns: repeat(5, 50px); gap: 5px; margin: 20px 0; }
         .tile { width: 50px; height: 50px; border: 2px solid #ccc; text-align: center; line-height: 50px; font-size: 20px; }
         .green { background: #6aaa64; color: white; border-color: #6aaa64; }
@@ -243,37 +243,6 @@
                 keyboard[key].state = 'unset';
                 keyboard[key].element.className = 'key';
             }
-        }
-
-        function createKeyboard() {
-            const keyboardLayout = [
-                ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
-                ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
-                ['Z', 'X', 'C', 'V', 'B', 'N', 'M']
-            ];
-            const keyboardDiv = document.getElementById('keyboard');
-            keyboardLayout.forEach(row => {
-                const rowDiv = document.createElement('div');
-                rowDiv.className = 'keyboard-row';
-                row.forEach(key => {
-                    const keyDiv = document.createElement('div');
-                    keyDiv.className = 'key';
-                    keyDiv.textContent = key;
-                    keyboard[key] = { element: keyDiv, state: 'unset' }; // Track state
-                    rowDiv.appendChild(keyDiv);
-                });
-                keyboardDiv.appendChild(rowDiv);
-            });
-        }
-
-        function updateKeyboard(guess, feedback) {
-            guess.split('').forEach((letter, i) => {
-                const state = feedback[i].includes('🟩') ? 'green' : feedback[i].includes('🟨') ? 'yellow' : 'gray';
-                if (keyboard[letter.toUpperCase()].state === 'unset' || (state === 'green' && keyboard[letter.toUpperCase()].state !== 'green')) {
-                    keyboard[letter.toUpperCase()].element.className = `key ${state}`;
-                    keyboard[letter.toUpperCase()].state = state;
-                }
-            });
         }
     </script>
 </body>
