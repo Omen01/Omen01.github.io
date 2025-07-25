@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Anime Wordle</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; height: 100vh; overflow: hidden; background: #2c2f33; }
+        .container { display: flex; flex-direction: column; align-items: center; height: 100%; }
+        .grid { display: grid; grid-template-columns: repeat(5, 50px); gap: 5px; margin: 20px 0; }
+        .tile { width: 50px; height: 50px; border: 2px solid #ccc; text-align: center; line-height: 50px; font-size: 20px; }
+        .green { background: #6aaa64; color: white; border-color: #6aaa64; }
+        .yellow { background: #c9b458; color: white; border-color: #c9b458; }
+        .gray { background: #787c7e; color: white; border-color: #787c7e; }
+        #guessInput { margin: 10px; padding: 5px; font-size: 16px; }
+        button { padding: 5px 10px; font-size: 16px; }
+        #message { color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Anime Wordle</h1>
+        <div class="grid" id="gameGrid"></div>
+        <input type="text" id="guessInput" maxlength="5" placeholder="Enter 5-letter word" onkeyup="if(event.key === 'Enter') makeGuess()">
+        <button onclick="makeGuess()">Guess</button>
+        <p id="message"></p>
+    </div>
+
+    <script>
+        const words = ["waifu", "henta", "tsund", "yande", "nekom", "sense", "kawai"].map(word => word.toUpperCase()); // Add more from words.txt
+        const secret = words[Math.floor(Math.random() * words.length)];
+        const grid = document.getElementById('gameGrid');
+        let attempts = 0, maxAttempts = 6;
+        const message = document.getElementById('message');
+
+        function createGrid() {
+            for (let i = 0; i < maxAttempts * 5; i++) {
+                const tile = document.createElement('div');
+                tile.className = 'tile';
+                grid.appendChild(tile);
+            }
+        }
+
+        function makeGuess() {
+            const input = document.getElementById('guessInput').value.toUpperCase();
+            if (input.length !== 5 || !words.includes(input)) {
+                message.textContent = 'Invalid 5-letter word!';
+                return;
+            }
+            const tiles = grid.children;
+            const start = attempts * 5;
+            for (let i = 0; i < 5; i++) {
+                const tile = tiles[start + i];
+                if (input[i] === secret[i]) tile.className = 'tile green';
+                else if (secret.includes(input[i])) tile.className = 'tile yellow';
+                else tile.className = 'tile gray';
+                tile.textContent = input[i];
+            }
+            attempts++;
+            if (input === secret) {
+                message.textContent = `You win! Word was ${secret}. Attempts: ${attempts}`;
+            } else if (attempts === maxAttempts) {
+                message.textContent = `Game over! Word was ${secret}`;
+            } else {
+                message.textContent = `Attempts left: ${maxAttempts - attempts}`;
+            }
+            document.getElementById('guessInput').value = '';
+        }
+
+        createGrid();
+    </script>
+</body>
+</html>
