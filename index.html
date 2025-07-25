@@ -43,6 +43,7 @@
         let message = null;
         let keyboard = {};
         let score = 0; // Track consecutive wins
+        let gameEnded = false; // Flag to track game end state
 
         // Fetch words.txt and initialize game
         fetch('words.txt')
@@ -66,13 +67,13 @@
                 createKeyboard();
                 // Add event listeners
                 document.getElementById('guessInput').addEventListener('keyup', (event) => {
-                    if (event.key === 'Enter' && attempts < maxAttempts) makeGuess(); // Enter for guessing
+                    if (event.key === 'Enter' && !gameEnded) makeGuess(); // Enter for guessing only if game not ended
                 });
                 document.getElementById('guessButton').addEventListener('click', makeGuess);
                 document.getElementById('playAgainButton').addEventListener('click', playAgain);
                 // Add Enter key listener for Play Again only after game end
                 document.addEventListener('keyup', (event) => {
-                    if (event.key === 'Enter' && (attempts === maxAttempts || (attempts > 0 && document.getElementById('playAgainButton').style.display !== 'none'))) {
+                    if (event.key === 'Enter' && gameEnded) {
                         playAgain();
                     }
                 });
@@ -163,11 +164,13 @@
                 message.textContent = `You win! Word was ${secret}. Attempts: ${attempts}`;
                 score++; // Increment score on win
                 document.getElementById('score').textContent = `Score: ${score}`;
+                gameEnded = true; // Set game end flag
                 document.getElementById('playAgainButton').style.display = 'block';
             } else if (attempts === maxAttempts) {
                 message.textContent = `Game over! Word was ${secret}`;
                 score = 0; // Reset score on loss
                 document.getElementById('score').textContent = `Score: ${score}`;
+                gameEnded = true; // Set game end flag
                 document.getElementById('playAgainButton').style.display = 'block';
             }
             document.getElementById('guessInput').value = '';
@@ -175,6 +178,7 @@
 
         function playAgain() {
             attempts = 0;
+            gameEnded = false; // Reset game end flag
             secret = words[Math.floor(Math.random() * words.length)];
             message.textContent = 'New game started! Guess a 5-letter word.';
             document.getElementById('playAgainButton').style.display = 'none';
