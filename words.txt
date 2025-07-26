@@ -277,6 +277,7 @@ kurau
 kyoko
 kyoto
 lance
+lando
 lapis
 large
 larks
@@ -325,6 +326,7 @@ metal
 mezzo
 miami
 michi
+miina
 milos
 minds
 minky
@@ -563,6 +565,7 @@ uzaki
 vrmmo
 waltz
 wanda
+wands
 wanna
 wansa
 water
@@ -666,6 +669,7 @@ denki
 denpa
 doppo
 doyle
+drago
 dupre
 ebina
 elena
