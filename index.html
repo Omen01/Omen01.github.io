@@ -135,6 +135,7 @@
         let gameEnded = false; // Flag to track game end state
         let progress = ['', '', '', '', '']; // Track progress for each position
         let hintsUsed = 0; // Track number of hints used
+        let lastFeedback = []; // Store the latest feedback for hint logic
 
         // Fetch words.txt and initialize game
         fetch('words.txt')
@@ -271,6 +272,7 @@
                 }
                 tile.textContent = input[i];
             }
+            lastFeedback = feedback; // Store the latest feedback
             console.log(`Attempt ${attempts}, Green Count: ${greenCount}, Feedback: ${feedback.join(', ')}, Progress: ${progress.join(', ')}`);
             updateKeyboard(input, feedback);
             updateProgressGrid();
@@ -305,14 +307,17 @@
         }
 
         function getHint() {
-            if (gameEnded || !secret || hintsUsed >= 2) return; // Limit to 2 hints
-            const emptyIndices = progress.map((p, i) => !p && i).filter(i => i !== false);
-            if (emptyIndices.length > 0) {
-                const index = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
-                progress[index] = secret[index];
-                updateProgressGrid();
-                hintsUsed++;
-                updateHintButton(); // Update button state after using hint
+            if (gameEnded || !secret || hintsUsed >= 2 || !lastFeedback.length) return; // Limit to 2 hints and require a guess
+            const yellows = lastFeedback.filter(f => f.includes('🟨')).map(f => ({ letter: f.split(' ')[1], index: lastFeedback.indexOf(f) }));
+            if (yellows.length > 0) {
+                const { letter, index } = yellows[Math.floor(Math.random() * yellows.length)];
+                const correctIndex = secret.indexOf(letter);
+                if (progress[correctIndex] === '') {
+                    progress[correctIndex] = letter;
+                    updateProgressGrid();
+                    hintsUsed++;
+                    updateHintButton(); // Update button state after using hint
+                }
             }
         }
 
@@ -334,6 +339,7 @@
             document.getElementById('playAgainButton').style.display = 'none';
             progress = ['', '', '', '', '']; // Reset progress
             hintsUsed = 0; // Reset hints
+            lastFeedback = []; // Reset last feedback
             createGrid();
             updateProgressGrid(); // Reset progress grid
             // Reset keyboard states
