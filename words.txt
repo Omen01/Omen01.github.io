@@ -170,6 +170,7 @@ ghost
 ghoul
 giant
 gigio
+giles
 ginga
 gokuu
 golgo
@@ -182,6 +183,7 @@ gyaku
 habit
 hades
 haiky
+hands
 hanma
 harem
 haven
@@ -403,6 +405,7 @@ polon
 ponyo
 pride
 primo
+promo
 pulse
 punch
 punie
