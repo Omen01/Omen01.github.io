@@ -71,20 +71,19 @@
                 margin: 0; 
             }
             .game-area { 
-                width: 90%; 
-                max-width: 90vw; 
+                width: 80%; 
                 margin: 0 auto; 
                 text-align: center; 
             }
-            .grid { grid-template-columns: repeat(5, 15vw); margin: 10px 0; }
-            .tile { width: 15vw; height: 15vw; line-height: 15vw; font-size: 6vw; }
-            #guessInput { font-size: 6vw; margin: 10px; max-width: 50vw; }
-            button { font-size: 4vw; padding: 10px 20px; margin: 5px; }
-            #message { font-size: 6vw; margin: 10px 0; }
-            .keyboard { margin-top: 10px; display: flex; justify-content: center; flex-wrap: wrap; }
-            .keyboard-row { gap: 3px; margin-bottom: 3px; }
-            .key { width: 10vw; height: 12vw; line-height: 12vw; font-size: 6vw; }
-            #score { font-size: 4vw; margin: 10px; }
+            .grid { grid-template-columns: repeat(5, 40px); margin: 10px 0; }
+            .tile { width: 40px; height: 40px; line-height: 40px; font-size: 16px; }
+            #guessInput { font-size: 16px; margin: 10px; max-width: 50vw; }
+            button { font-size: 12px; padding: 5px 10px; margin: 5px; }
+            #message { font-size: 16px; margin: 10px 0; }
+            .keyboard { margin-top: 10px; width: 100%; text-align: center; }
+            .keyboard-row { gap: 2px; margin-bottom: 2px; display: inline-flex; justify-content: center; }
+            .key { width: 25px; height: 30px; line-height: 30px; font-size: 12px; }
+            #score { font-size: 12px; margin: 10px; }
             .progress-area { 
                 position: fixed; 
                 bottom: 0; 
@@ -93,10 +92,12 @@
                 text-align: center; 
                 background: #2c2f33; 
                 padding: 5px 0; 
+                margin: 0 auto; 
+                max-width: 200px; 
             }
-            .progress-grid { grid-template-columns: repeat(5, 12vw); }
-            .progress-tile { width: 12vw; height: 12vw; line-height: 12vw; font-size: 5vw; }
-            #hintButton { font-size: 4vw; padding: 10px 20px; margin-left: -5px; }
+            .progress-grid { grid-template-columns: repeat(5, 30px); }
+            .progress-tile { width: 30px; height: 30px; line-height: 30px; font-size: 12px; }
+            #hintButton { font-size: 12px; padding: 5px 10px; }
         }
     </style>
 </head>
@@ -312,7 +313,7 @@
             const hintButton = document.getElementById('hintButton');
             console.log(`Attempts: ${attempts}, Green Count: ${greenCount}, Hints Used: ${hintsUsed}, Game Ended: ${gameEnded}, Secret: ${secret}`);
             if (!gameEnded && hintsUsed < 2) {
-                hintButton.disabled = false; // Enable hint permanently unless max hints or game ended
+                hintButton.disabled = false; // Enable hint permanently unless max hints or game end
             } else {
                 hintButton.disabled = true; // Disable after 2 hints or game end
             }
