@@ -136,6 +136,7 @@
         let progress = ['', '', '', '', '']; // Track progress for each position
         let hintsUsed = 0; // Track number of hints used
         let lastFeedback = []; // Store the latest feedback for hint logic
+        let lastInput = ''; // Store the latest input for fade check
 
         // Fetch words.txt and initialize game
         fetch('words.txt')
@@ -245,6 +246,7 @@
                 return;
             }
             const input = document.getElementById('guessInput').value.toUpperCase();
+            lastInput = input; // Store the latest input
             if (input.length !== 5 || !words.includes(input)) {
                 message.textContent = 'Guess an actual word next time...';
                 return;
@@ -283,12 +285,16 @@
                 score++; // Increment score on win
                 document.getElementById('score').textContent = `Score: ${score}`;
                 gameEnded = true; // Set game end flag
+                progress = secret.split(''); // Autofill progress with full word
+                updateProgressGrid();
                 document.getElementById('playAgainButton').style.display = 'block';
             } else if (attempts === maxAttempts) {
                 message.textContent = `LOL! Try again next time! Word was ${secret}`;
                 score = 0; // Reset score on loss
                 document.getElementById('score').textContent = `Score: ${score}`;
                 gameEnded = true; // Set game end flag
+                progress = secret.split(''); // Autofill progress with full word
+                updateProgressGrid();
                 document.getElementById('playAgainButton').style.display = 'block';
             }
             document.getElementById('guessInput').value = '';
@@ -298,10 +304,10 @@
             const tiles = progressGrid.children;
             for (let i = 0; i < 5; i++) {
                 tiles[i].textContent = progress[i] || '';
-                if (progress[i] && !gameEnded) {
-                    tiles[i].classList.add('faded'); // Add faded class on hint until solved
-                } else if (gameEnded) {
-                    tiles[i].classList.remove('faded'); // Remove faded on solve
+                if (progress[i] && !gameEnded && lastInput[i] !== progress[i]) {
+                    tiles[i].classList.add('faded'); // Add faded class on hint until correctly guessed
+                } else {
+                    tiles[i].classList.remove('faded'); // Remove faded when correctly guessed or game ended
                 }
             }
         }
@@ -340,6 +346,7 @@
             progress = ['', '', '', '', '']; // Reset progress
             hintsUsed = 0; // Reset hints
             lastFeedback = []; // Reset last feedback
+            lastInput = ''; // Reset last input
             createGrid();
             updateProgressGrid(); // Reset progress grid
             // Reset keyboard states
