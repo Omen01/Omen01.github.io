@@ -278,15 +278,11 @@
             updateKeyboard(input, feedback);
             updateProgressGrid();
             attempts++;
-            updateHintButton(greenCount);
-            if (input === secret) {
-                message.textContent = `Actual Dweeb! You got the answer ${secret}. Attempts: ${attempts}`;
-                score++; // Increment score on win
-                document.getElementById('score').textContent = `Score: ${score}`;
-                gameEnded = true; // Set game end flag
-                progress = secret.split(''); // Autofill progress with full word
-                updateProgressGrid();
-                document.getElementById('playAgainButton').style.display = 'block';
+            function updateHintButton(greenCount) {
+    const hintButton = document.getElementById('hintButton');
+    console.log(`Attempts: ${attempts}, Green Count: ${greenCount}, Hints Used: ${hintsUsed}, Game Ended: ${gameEnded}`); // Removed Secret: ${secret}
+    // Rest of the function...
+}
             } else if (attempts === maxAttempts) {
                 message.textContent = `LOL! Try again next time! Word was ${secret}`;
                 score = 0; // Reset score on loss
