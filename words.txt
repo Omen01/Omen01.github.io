@@ -777,6 +777,7 @@ isaac
 issei
 isuzu
 italy
+itaru
 izana
 izaya
 izuku
@@ -812,6 +813,7 @@ kenzo
 kirei
 konan
 korra
+kouko
 kureo
 kusuo
 kyogo
@@ -931,6 +933,7 @@ umbra
 umino
 unzen
 urabe
+uroko
 uryuu
 usopp
 uzuki
