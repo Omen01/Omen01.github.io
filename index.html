@@ -65,27 +65,28 @@
         @media (max-width: 768px) {
             body { padding-left: 0; } /* Remove padding on mobile */
             .container { 
-                flex-direction: column-reverse; 
+                flex-direction: column; 
                 align-items: center; 
                 width: 100%; 
                 max-width: none; 
             }
-            .game-area { width: 100%; max-width: none; margin-top: 20px; }
-            .grid { grid-template-columns: repeat(5, 22vw); margin: 10px 0; }
-            .tile { width: 22vw; height: 22vw; line-height: 22vw; font-size: 8vw; }
-            #guessInput { font-size: 8vw; }
-            button { font-size: 7vw; padding: 12px 25px; }
-            #message { font-size: 8vw; }
+            .game-area { width: 100%; max-width: none; margin: 0; flex-grow: 1; }
+            .grid { grid-template-columns: repeat(5, 24vw); margin: 10px 0; }
+            .tile { width: 24vw; height: 24vw; line-height: 24vw; font-size: 9vw; }
+            #guessInput { font-size: 9vw; }
+            button { font-size: 8vw; padding: 15px 30px; }
+            #message { font-size: 9vw; }
             .keyboard { margin-top: 10px; }
-            .key { width: 16vw; height: 19vw; line-height: 19vw; font-size: 7vw; }
-            #score { font-size: 7vw; }
+            .key { width: 18vw; height: 21vw; line-height: 21vw; font-size: 8vw; }
+            #score { font-size: 8vw; }
             .progress-area { 
                 width: 100%; 
+                margin-top: auto; 
                 text-align: center; 
             }
-            .progress-grid { grid-template-columns: repeat(5, 22vw); }
-            .progress-tile { width: 22vw; height: 22vw; line-height: 22vw; font-size: 8vw; }
-            #hintButton { font-size: 7vw; padding: 12px 25px; }
+            .progress-grid { grid-template-columns: repeat(5, 24vw); }
+            .progress-tile { width: 24vw; height: 24vw; line-height: 24vw; font-size: 9vw; }
+            #hintButton { font-size: 8vw; padding: 15px 30px; }
         }
     </style>
 </head>
