@@ -791,6 +791,7 @@ minor
 mioda
 miria
 misty
+miuna
 morow
 mousy
 mugen
