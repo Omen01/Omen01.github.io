@@ -27,6 +27,7 @@
             align-items: center; 
             width: 60%; 
             max-width: 600px; 
+            min-height: 0; /* Prevent collapse on mobile */
         }
         .grid { 
             display: grid; 
@@ -68,14 +69,8 @@
                 align-items: center; 
                 width: 100%; 
                 max-width: none; 
-                justify-content: flex-start; 
             }
-            .game-area { 
-                width: 100%; 
-                max-width: none; 
-                margin: 0; 
-                flex-grow: 1; 
-            }
+            .game-area { width: 100%; max-width: none; margin: 0; }
             .grid { grid-template-columns: repeat(5, 20vw); margin: 10px 0; }
             .tile { width: 20vw; height: 20vw; line-height: 20vw; font-size: 7vw; }
             #guessInput { font-size: 7vw; }
@@ -85,9 +80,8 @@
             .key { width: 14vw; height: 17vw; line-height: 17vw; font-size: 6vw; }
             #score { font-size: 6vw; }
             .progress-area { 
-                margin-top: auto; 
                 width: 100%; 
-                order: 1; 
+                margin-top: 20px; 
                 text-align: center; 
             }
             .progress-grid { grid-template-columns: repeat(5, 20vw); }
@@ -179,4 +173,158 @@
                 return;
             }
             grid.innerHTML = ''; // Clear previous grid
-            for (let i = 0; i < maxAttempts * 5;
+            for (let i = 0; i < maxAttempts * 5; i++) {
+                const tile = document.createElement('div');
+                tile.className = 'tile';
+                grid.appendChild(tile);
+            }
+        }
+
+        function createProgressGrid() {
+            if (!progressGrid) {
+                console.error('Progress grid element not found');
+                return;
+            }
+            progressGrid.innerHTML = ''; // Clear previous progress grid
+            for (let i = 0; i < 5; i++) {
+                const tile = document.createElement('div');
+                tile.className = 'progress-tile';
+                tile.textContent = progress[i] || '';
+                progressGrid.appendChild(tile);
+            }
+        }
+
+        function createKeyboard() {
+            const keyboardLayout = [
+                ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
+                ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
+                ['Z', 'X', 'C', 'V', 'B', 'N', 'M']
+            ];
+            const keyboardDiv = document.getElementById('keyboard');
+            keyboardLayout.forEach(row => {
+                const rowDiv = document.createElement('div');
+                rowDiv.className = 'keyboard-row';
+                row.forEach(key => {
+                    const keyDiv = document.createElement('div');
+                    keyDiv.className = 'key';
+                    keyDiv.textContent = key;
+                    keyboard[key] = { element: keyDiv, state: 'unset' }; // Track state
+                    rowDiv.appendChild(keyDiv);
+                });
+                keyboardDiv.appendChild(rowDiv);
+            });
+        }
+
+        function updateKeyboard(guess, feedback) {
+            guess.split('').forEach((letter, i) => {
+                const state = feedback[i].includes('🟩') ? 'green' : feedback[i].includes('🟨') ? 'yellow' : 'gray';
+                if (keyboard[letter.toUpperCase()].state === 'unset' || (state === 'green' && keyboard[letter.toUpperCase()].state !== 'green')) {
+                    keyboard[letter.toUpperCase()].element.className = `key ${state}`;
+                    keyboard[letter.toUpperCase()].state = state;
+                }
+            });
+        }
+
+        function makeGuess() {
+            if (words.length === 0 || !secret) {
+                message.textContent = 'Game not initialized. Please refresh.';
+                return;
+            }
+            const input = document.getElementById('guessInput').value.toUpperCase();
+            if (input.length !== 5 || !words.includes(input)) {
+                message.textContent = 'Guess an actual word next time...';
+                return;
+            }
+            const tiles = grid.children;
+            const start = attempts * 5;
+            const feedback = [];
+            const secretList = secret.split('');
+            let greenCount = 0;
+            for (let i = 0; i < 5; i++) {
+                const tile = tiles[start + i];
+                if (input[i] === secretList[i]) {
+                    feedback.push(`🟩 ${input[i]}`);
+                    tile.className = 'tile green';
+                    secretList[i] = null;
+                    progress[i] = input[i]; // Update progress for all green matches
+                    greenCount++; // Increment green count for each match
+                } else if (secretList.includes(input[i])) {
+                    feedback.push(`🟨 ${input[i]}`);
+                    tile.className = 'tile yellow';
+                    secretList[secretList.indexOf(input[i])] = null;
+                } else {
+                    feedback.push(`⬛ ${input[i]}`);
+                    tile.className = 'tile gray';
+                }
+                tile.textContent = input[i];
+            }
+            console.log(`Attempt ${attempts}, Green Count: ${greenCount}, Feedback: ${feedback.join(', ')}, Progress: ${progress.join(', ')}`);
+            updateKeyboard(input, feedback);
+            updateProgressGrid();
+            attempts++;
+            updateHintButton(greenCount);
+            if (input === secret) {
+                message.textContent = `Actual Dweeb! You got the answer ${secret}. Attempts: ${attempts}`;
+                score++; // Increment score on win
+                document.getElementById('score').textContent = `Score: ${score}`;
+                gameEnded = true; // Set game end flag
+                document.getElementById('playAgainButton').style.display = 'block';
+            } else if (attempts === maxAttempts) {
+                message.textContent = `LOL! Try again next time! Word was ${secret}`;
+                score = 0; // Reset score on loss
+                document.getElementById('score').textContent = `Score: ${score}`;
+                gameEnded = true; // Set game end flag
+                document.getElementById('playAgainButton').style.display = 'block';
+            }
+            document.getElementById('guessInput').value = '';
+        }
+
+        function updateProgressGrid() {
+            const tiles = progressGrid.children;
+            for (let i = 0; i < 5; i++) {
+                tiles[i].textContent = progress[i] || '';
+            }
+        }
+
+        function getHint() {
+            if (gameEnded || !secret || hintsUsed >= 2) return; // Limit to 2 hints
+            const emptyIndices = progress.map((p, i) => !p && i).filter(i => i !== false);
+            if (emptyIndices.length > 0) {
+                const index = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
+                progress[index] = secret[index];
+                updateProgressGrid();
+                hintsUsed++;
+                updateHintButton(); // Update button state after using hint
+            }
+        }
+
+        function updateHintButton(greenCount) {
+            const hintButton = document.getElementById('hintButton');
+            console.log(`Attempts: ${attempts}, Green Count: ${greenCount}, Hints Used: ${hintsUsed}, Game Ended: ${gameEnded}, Secret: ${secret}`);
+            if (!gameEnded && hintsUsed < 2) {
+                hintButton.disabled = false; // Enable hint permanently unless max hints or game ended
+            } else {
+                hintButton.disabled = true; // Disable after 2 hints or game end
+            }
+        }
+
+        function playAgain() {
+            attempts = 0;
+            gameEnded = false; // Reset game end flag
+            secret = words[Math.floor(Math.random() * words.length)];
+            message.textContent = 'New game started! Good Luck, Degen.';
+            document.getElementById('playAgainButton').style.display = 'none';
+            progress = ['', '', '', '', '']; // Reset progress
+            hintsUsed = 0; // Reset hints
+            createGrid();
+            updateProgressGrid(); // Reset progress grid
+            // Reset keyboard states
+            for (let key in keyboard) {
+                keyboard[key].state = 'unset';
+                keyboard[key].element.className = 'key';
+            }
+            document.getElementById('hintButton').disabled = false; // Enable hint at start
+        }
+    </script>
+</body>
+</html>
