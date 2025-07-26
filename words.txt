@@ -39,6 +39,7 @@ arete
 ariel
 arion
 arise
+armor
 asahi
 asari
 ascii
