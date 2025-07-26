@@ -1,11 +1,14 @@
+absol
 abyss
 accel
 adieu
 aegis
 agnes
 ailyn
+aipom
 ahiru
 airan
+arbok
 aiura
 akagi
 akame
@@ -49,11 +52,13 @@ axess
 ayane
 ayano
 ayumi
+azelf
 azuki
 azure
 azusa
 babel
 bachi
+bagon
 baldr
 barom
 baron
@@ -65,8 +70,11 @@ bokan
 bosco
 brock
 broly
+brook
+budew
 bungo
 bunny
+burmy
 busou
 cabby
 canan
@@ -100,6 +108,7 @@ dance
 dante
 dchen
 death
+deino
 deity
 dekai
 della
@@ -108,9 +117,12 @@ dence
 denka
 derby
 devil
+diana
 diary
+ditto
 doesn
 dodai
+doduo
 dokku
 dolls
 donna
@@ -125,8 +137,10 @@ eater
 ebisu
 ecchi
 edens
+eevee
 eiken
 eizou
+ekans
 elder
 elegy
 elfen
@@ -134,6 +148,7 @@ elise
 elven
 elves
 enjou
+entai
 enzai
 eriko
 escha
@@ -168,11 +183,15 @@ genma
 ghost
 ghoul
 giant
+gible
 gigio
 giles
 ginga
+gloom
 gokuu
+golem
 golgo
+goomy
 gotai
 grimm
 guild
@@ -191,6 +210,7 @@ holic
 hoopa
 hyako
 hyoei
+hypno
 hyppo
 iczer
 ideon
@@ -202,6 +222,7 @@ illya
 imari
 inaba
 inari
+inkay
 irabu
 iriya
 iroha
@@ -265,6 +286,8 @@ kiria
 kirie
 kitan
 kitty
+klang
+klink
 kochi
 kocho
 kodou
@@ -290,11 +313,15 @@ liebe
 light
 logos
 lords
+lotad
 loups
 luffy
+lugia
 lunar
 lupin
+luxio
 madox
+magby
 magia
 magic
 magus
@@ -330,6 +357,7 @@ milos
 minds
 minky
 minna
+minun
 mirai
 mirmo
 misha
@@ -339,6 +367,7 @@ mokku
 mpfer
 muhyo
 multi
+munna
 munto
 musha
 mushi
@@ -364,6 +393,7 @@ noble
 noein
 nonet
 norun
+numel
 ojaru
 okami
 okojo
@@ -391,6 +421,7 @@ paboo
 palme
 panic
 panyo
+paras
 papii
 passo
 pedal
@@ -398,6 +429,7 @@ petit
 phase
 piano
 pichi
+pichu
 piece
 pinch
 pinto
@@ -418,6 +450,7 @@ queen
 quest
 quiet
 quill
+ralts
 ramen
 rampo
 ranbu
@@ -438,6 +471,7 @@ reyon
 rifle
 rikka
 rinne
+riolu
 ritsu
 river
 rlish
@@ -454,6 +488,7 @@ ronde
 rondo
 ronia
 ronin
+rotom
 rouge
 royal
 rozen
@@ -493,6 +528,7 @@ shall
 shana
 shell
 shiki
+shinx
 shion
 shiro
 shizu
@@ -504,6 +540,7 @@ slice
 slime
 smash
 snafu
+snivy
 solty
 songs
 sorai
@@ -532,6 +569,7 @@ tanya
 teito
 tenge
 tengu
+tepig
 tenri
 terra
 tethe
@@ -554,6 +592,7 @@ ultra
 umaru
 unato
 unico
+unown
 urara
 urawa
 usagi
@@ -575,6 +614,7 @@ wxiii
 xiyou
 yagyu
 yaiba
+yanma
 yasha
 yogen
 yohko
@@ -598,11 +638,14 @@ zexal
 zhime
 zoids
 zorro
+zorua
+zubat
 zoshi
 acchi
 agasa
 ageha
 aizen
+akame
 akari
 akaza
 akemi
@@ -616,11 +659,13 @@ amata
 amayo
 ameno
 amuro
+annie
 aoshi
 arika
 armin
 asada
 asami
+asuma
 asuna
 atlas
 ayame
@@ -698,6 +743,7 @@ ganju
 gasai
 gelus
 gendo
+genos
 genya
 ginji
 ginko
@@ -775,6 +821,7 @@ leafa
 licht
 lloyd
 lotte
+louis
 lucoa
 machi
 mafia
@@ -783,6 +830,7 @@ manji
 makio
 maruo
 mason
+might
 mikan
 mikey
 milly
@@ -827,6 +875,7 @@ renge
 renji
 retsu
 rival
+robin
 rosso
 rukia
 russo
@@ -854,6 +903,7 @@ shoyo
 shugo
 silva
 sinon
+smith
 sohma
 stein
 sugou
@@ -865,6 +915,7 @@ teiko
 tenma
 tenoh
 tenya
+tobio
 tohru
 tokie
 tomoe
@@ -890,6 +941,7 @@ wamuu
 wanze
 washu
 weiss
+wendy
 wenge
 werec
 winry
