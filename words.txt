@@ -544,6 +544,7 @@ tower
 trail
 trapp
 trava
+truck
 tsubu
 tsugu
 tsuki
