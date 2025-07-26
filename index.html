@@ -60,6 +60,7 @@
         .progress-area { display: flex; flex-direction: column; align-items: center; margin-left: 2%; }
         .progress-grid { display: grid; grid-template-columns: repeat(5, 50px); gap: 5px; }
         .progress-tile { width: 50px; height: 50px; border: 2px solid #ccc; text-align: center; line-height: 50px; font-size: 20px; background: #444; color: white; }
+        .progress-tile.faded { opacity: 0.5; } /* Faded style for hint letters */
         #hintButton:disabled { opacity: 0.5; cursor: not-allowed; }
 
         /* Media query for mobile devices (e.g., max-width: 768px) */
@@ -295,6 +296,11 @@
             const tiles = progressGrid.children;
             for (let i = 0; i < 5; i++) {
                 tiles[i].textContent = progress[i] || '';
+                if (progress[i] && !gameEnded) {
+                    tiles[i].classList.add('faded'); // Add faded class on hint until solved
+                } else if (gameEnded) {
+                    tiles[i].classList.remove('faded'); // Remove faded on solve
+                }
             }
         }
 
@@ -313,10 +319,10 @@
         function updateHintButton(greenCount) {
             const hintButton = document.getElementById('hintButton');
             console.log(`Attempts: ${attempts}, Green Count: ${greenCount}, Hints Used: ${hintsUsed}, Game Ended: ${gameEnded}, Secret: ${secret}`);
-            if (!gameEnded && hintsUsed < 2) {
-                hintButton.disabled = false; // Enable hint permanently unless max hints or game end
+            if (!gameEnded && hintsUsed < 2 && greenCount < 3) {
+                hintButton.disabled = false; // Enable hint if less than 3 greens and not maxed out
             } else {
-                hintButton.disabled = true; // Disable after 2 hints or game end
+                hintButton.disabled = true; // Disable if 3+ greens, max hints, or game ended
             }
         }
 
