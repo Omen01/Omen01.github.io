@@ -27,7 +27,7 @@
             align-items: center; 
             width: 60%; 
             max-width: 600px; 
-            min-height: 0; /* Prevent collapse on mobile */
+            min-height: 100%; /* Ensure content displays on mobile */
         }
         .grid { 
             display: grid; 
@@ -65,28 +65,27 @@
         @media (max-width: 768px) {
             body { padding-left: 0; } /* Remove padding on mobile */
             .container { 
-                flex-direction: column; 
+                flex-direction: column-reverse; 
                 align-items: center; 
                 width: 100%; 
                 max-width: none; 
             }
-            .game-area { width: 100%; max-width: none; margin: 0; }
-            .grid { grid-template-columns: repeat(5, 20vw); margin: 10px 0; }
-            .tile { width: 20vw; height: 20vw; line-height: 20vw; font-size: 7vw; }
-            #guessInput { font-size: 7vw; }
-            button { font-size: 6vw; padding: 10px 20px; }
-            #message { font-size: 7vw; }
+            .game-area { width: 100%; max-width: none; margin-top: 20px; }
+            .grid { grid-template-columns: repeat(5, 22vw); margin: 10px 0; }
+            .tile { width: 22vw; height: 22vw; line-height: 22vw; font-size: 8vw; }
+            #guessInput { font-size: 8vw; }
+            button { font-size: 7vw; padding: 12px 25px; }
+            #message { font-size: 8vw; }
             .keyboard { margin-top: 10px; }
-            .key { width: 14vw; height: 17vw; line-height: 17vw; font-size: 6vw; }
-            #score { font-size: 6vw; }
+            .key { width: 16vw; height: 19vw; line-height: 19vw; font-size: 7vw; }
+            #score { font-size: 7vw; }
             .progress-area { 
                 width: 100%; 
-                margin-top: 20px; 
                 text-align: center; 
             }
-            .progress-grid { grid-template-columns: repeat(5, 20vw); }
-            .progress-tile { width: 20vw; height: 20vw; line-height: 20vw; font-size: 7vw; }
-            #hintButton { font-size: 6vw; padding: 10px 20px; }
+            .progress-grid { grid-template-columns: repeat(5, 22vw); }
+            .progress-tile { width: 22vw; height: 22vw; line-height: 22vw; font-size: 8vw; }
+            #hintButton { font-size: 7vw; padding: 12px 25px; }
         }
     </style>
 </head>
