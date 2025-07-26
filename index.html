@@ -42,7 +42,7 @@
         <div class="progress-area">
             <h2>Progress</h2>
             <div class="progress-grid" id="progressGrid"></div>
-            <button id="hintButton" disabled>Hint</button>
+            <button id="hintButton">Hint</button> <!-- Removed disabled by default -->
         </div>
     </div>
 
@@ -176,7 +176,7 @@
             const start = attempts * 5;
             const feedback = [];
             const secretList = secret.split('');
-            let greenCount = (feedback.filter(f => f.includes('🟩')).length); // Count greens from feedback
+            let greenCount = 0;
             for (let i = 0; i < 5; i++) {
                 const tile = tiles[start + i];
                 if (input[i] === secretList[i]) {
@@ -184,6 +184,7 @@
                     tile.className = 'tile green';
                     secretList[i] = null;
                     progress[i] = input[i]; // Update progress for all green matches
+                    greenCount++; // Increment green count for each match
                 } else if (secretList.includes(input[i])) {
                     feedback.push(`🟨 ${input[i]}`);
                     tile.className = 'tile yellow';
@@ -237,14 +238,10 @@
         function updateHintButton(greenCount) {
             const hintButton = document.getElementById('hintButton');
             console.log(`Attempts: ${attempts}, Green Count: ${greenCount}, Hints Used: ${hintsUsed}, Game Ended: ${gameEnded}, Secret: ${secret}`);
-            if (attempts >= 3 && greenCount === 3 && hintsUsed === 0 && !gameEnded) {
-                hintButton.disabled = false; // Enable first hint after 3 guesses with 3 greens
-            } else if (attempts >= 5 && greenCount < 4 && hintsUsed === 1 && !gameEnded) {
-                hintButton.disabled = false; // Enable second hint after 5 guesses with < 4 greens
-            } else if (hintsUsed >= 2 || gameEnded) {
-                hintButton.disabled = true; // Disable after 2 hints or game end
+            if (!gameEnded && hintsUsed < 2) {
+                hintButton.disabled = false; // Enable hint permanently unless max hints or game ended
             } else {
-                hintButton.disabled = true; // Disable otherwise
+                hintButton.disabled = true; // Disable after 2 hints or game end
             }
         }
 
@@ -263,7 +260,7 @@
                 keyboard[key].state = 'unset';
                 keyboard[key].element.className = 'key';
             }
-            document.getElementById('hintButton').disabled = true; // Disable hint at start
+            document.getElementById('hintButton').disabled = false; // Enable hint at start
         }
     </script>
 </body>
