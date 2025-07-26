@@ -71,16 +71,17 @@
                 margin: 0; 
             }
             .game-area { 
-                width: 100%; 
+                width: 90%; 
+                max-width: 90vw; 
                 margin: 0 auto; 
                 text-align: center; 
             }
             .grid { grid-template-columns: repeat(5, 15vw); margin: 10px 0; }
             .tile { width: 15vw; height: 15vw; line-height: 15vw; font-size: 6vw; }
-            #guessInput { font-size: 6vw; margin: 10px; }
+            #guessInput { font-size: 6vw; margin: 10px; max-width: 50vw; }
             button { font-size: 4vw; padding: 10px 20px; margin: 5px; }
             #message { font-size: 6vw; margin: 10px 0; }
-            .keyboard { margin-top: 10px; }
+            .keyboard { margin-top: 10px; display: flex; justify-content: center; flex-wrap: wrap; }
             .keyboard-row { gap: 3px; margin-bottom: 3px; }
             .key { width: 10vw; height: 12vw; line-height: 12vw; font-size: 6vw; }
             #score { font-size: 4vw; margin: 10px; }
@@ -95,7 +96,7 @@
             }
             .progress-grid { grid-template-columns: repeat(5, 12vw); }
             .progress-tile { width: 12vw; height: 12vw; line-height: 12vw; font-size: 5vw; }
-            #hintButton { font-size: 4vw; padding: 10px 20px; }
+            #hintButton { font-size: 4vw; padding: 10px 20px; margin-left: -5px; }
         }
     </style>
 </head>
