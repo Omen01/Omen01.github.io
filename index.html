@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Anime Wordle</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Add viewport meta tag -->
     <style>
         body { 
             font-family: Arial, sans-serif; 
@@ -27,7 +28,7 @@
             align-items: center; 
             width: 60%; 
             max-width: 600px; 
-            min-height: 100%; /* Ensure content displays on mobile */
+            min-height: 100%; /* Ensure content displays on desktop */
         }
         .grid { 
             display: grid; 
@@ -65,28 +66,36 @@
         @media (max-width: 768px) {
             body { padding-left: 0; } /* Remove padding on mobile */
             .container { 
-                flex-direction: column; 
-                align-items: center; 
+                display: block; 
                 width: 100%; 
-                max-width: none; 
+                margin: 0; 
             }
-            .game-area { width: 100%; max-width: none; margin: 0; flex-grow: 1; }
-            .grid { grid-template-columns: repeat(5, 24vw); margin: 10px 0; }
-            .tile { width: 24vw; height: 24vw; line-height: 24vw; font-size: 9vw; }
-            #guessInput { font-size: 9vw; }
-            button { font-size: 8vw; padding: 15px 30px; }
-            #message { font-size: 9vw; }
-            .keyboard { margin-top: 10px; }
-            .key { width: 18vw; height: 21vw; line-height: 21vw; font-size: 8vw; }
-            #score { font-size: 8vw; }
-            .progress-area { 
+            .game-area { 
                 width: 100%; 
-                margin-top: auto; 
+                margin: 0 auto; 
                 text-align: center; 
             }
-            .progress-grid { grid-template-columns: repeat(5, 24vw); }
-            .progress-tile { width: 24vw; height: 24vw; line-height: 24vw; font-size: 9vw; }
-            #hintButton { font-size: 8vw; padding: 15px 30px; }
+            .grid { grid-template-columns: repeat(5, 30vw); margin: 10px 0; }
+            .tile { width: 30vw; height: 30vw; line-height: 30vw; font-size: 12vw; }
+            #guessInput { font-size: 12vw; margin: 10px; }
+            button { font-size: 10vw; padding: 20px 40px; margin: 5px; }
+            #message { font-size: 12vw; margin: 10px 0; }
+            .keyboard { margin-top: 10px; }
+            .keyboard-row { gap: 5px; margin-bottom: 5px; }
+            .key { width: 22vw; height: 25vw; line-height: 25vw; font-size: 12vw; }
+            #score { font-size: 10vw; margin: 10px; }
+            .progress-area { 
+                position: fixed; 
+                bottom: 0; 
+                left: 0; 
+                width: 100%; 
+                text-align: center; 
+                background: #2c2f33; 
+                padding: 10px 0; 
+            }
+            .progress-grid { grid-template-columns: repeat(5, 30vw); }
+            .progress-tile { width: 30vw; height: 30vw; line-height: 30vw; font-size: 12vw; }
+            #hintButton { font-size: 10vw; padding: 20px 40px; }
         }
     </style>
 </head>
