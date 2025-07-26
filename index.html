@@ -3,28 +3,81 @@
 <head>
     <title>Anime Wordle</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; height: 100vh; overflow: hidden; background: #2c2f33; display: flex; justify-content: center; padding-left: 410px; }
-        .container { display: flex; flex-direction: row; align-items: flex-start; width: 1000px; margin: 0 auto; }
-        .game-area { display: flex; flex-direction: column; align-items: center; width: 600px; }
-        .grid { display: grid; grid-template-columns: repeat(5, 50px); gap: 5px; margin: 20px 0; }
-        .tile { width: 50px; height: 50px; border: 2px solid #ccc; text-align: center; line-height: 50px; font-size: 20px; }
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 0; 
+            height: 100vh; 
+            overflow: hidden; 
+            background: #2c2f33; 
+            display: flex; 
+            justify-content: center; 
+            padding-left: 410px; /* Desktop padding */
+        }
+        .container { 
+            display: flex; 
+            flex-direction: row; 
+            align-items: flex-start; 
+            width: 100%; 
+            max-width: 1000px; 
+            margin: 0 auto; 
+        }
+        .game-area { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            width: 60%; 
+            max-width: 600px; 
+        }
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(5, 10vw); /* Responsive tile width */
+            gap: 5px; 
+            margin: 20px 0; 
+        }
+        .tile { 
+            width: 10vw; 
+            height: 10vw; 
+            border: 2px solid #ccc; 
+            text-align: center; 
+            line-height: 10vw; 
+            font-size: 4vw; 
+        }
         .green { background: #6aaa64; color: white; border-color: #6aaa64; }
         .yellow { background: #c9b458; color: white; border-color: #c9b458; }
         .gray { background: #787c7e; color: white; border-color: #787c7e; }
-        #guessInput { margin: 10px; padding: 5px; font-size: 16px; }
-        button { padding: 5px 10px; font-size: 16px; margin: 5px; }
-        #message { color: white; margin: 20px 0; font-size: 24px; font-weight: bold; text-align: center; }
+        #guessInput { margin: 10px; padding: 5px; font-size: 4vw; }
+        button { padding: 5px 10px; font-size: 3vw; margin: 5px; }
+        #message { color: white; margin: 20px 0; font-size: 4vw; font-weight: bold; text-align: center; }
         .keyboard { margin-top: 20px; }
-        .keyboard-row { display: flex; gap: 5px; margin-bottom: 5px; }
-        .key { width: 30px; height: 40px; border: 1px solid #ccc; text-align: center; line-height: 40px; background: #fff; cursor: pointer; }
+        .keyboard-row { display: flex; gap: 2px; margin-bottom: 2px; }
+        .key { width: 6vw; height: 8vw; border: 1px solid #ccc; text-align: center; line-height: 8vw; background: #fff; cursor: pointer; font-size: 3vw; }
         .key.green { background: #6aaa64; color: white; }
         .key.yellow { background: #c9b458; color: white; }
         .key.gray { background: #787c7e; color: white; }
-        #score { color: white; margin: 10px; font-weight: bold; }
-        .progress-area { display: flex; flex-direction: column; align-items: center; margin-left: 40px; }
-        .progress-grid { display: grid; grid-template-columns: repeat(5, 50px); gap: 5px; }
-        .progress-tile { width: 50px; height: 50px; border: 2px solid #ccc; text-align: center; line-height: 50px; font-size: 20px; background: #444; color: white; }
+        #score { color: white; margin: 10px; font-size: 3vw; font-weight: bold; }
+        .progress-area { display: flex; flex-direction: column; align-items: center; margin-left: 2%; }
+        .progress-grid { display: grid; grid-template-columns: repeat(5, 10vw); gap: 5px; }
+        .progress-tile { width: 10vw; height: 10vw; border: 2px solid #ccc; text-align: center; line-height: 10vw; font-size: 4vw; background: #444; color: white; }
         #hintButton:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* Media query for mobile devices (e.g., max-width: 768px) */
+        @media (max-width: 768px) {
+            body { padding-left: 0; } /* Remove padding on mobile */
+            .container { flex-direction: column; align-items: center; width: 90%; max-width: none; }
+            .game-area { width: 100%; max-width: none; margin: 0; }
+            .grid { grid-template-columns: repeat(5, 18vw); margin: 10px 0; }
+            .tile { width: 18vw; height: 18vw; line-height: 18vw; font-size: 6vw; }
+            #guessInput { font-size: 6vw; }
+            button { font-size: 5vw; }
+            #message { font-size: 6vw; }
+            .keyboard { margin-top: 10px; }
+            .key { width: 10vw; height: 12vw; line-height: 12vw; font-size: 5vw; }
+            #score { font-size: 5vw; }
+            .progress-area { margin: 10px 0 0 0; width: 100%; }
+            .progress-grid { grid-template-columns: repeat(5, 18vw); }
+            .progress-tile { width: 18vw; height: 18vw; line-height: 18vw; font-size: 6vw; }
+            #hintButton { font-size: 5vw; }
+        }
     </style>
 </head>
 <body>
@@ -42,7 +95,7 @@
         <div class="progress-area">
             <h2>Progress</h2>
             <div class="progress-grid" id="progressGrid"></div>
-            <button id="hintButton">Hint</button> <!-- Removed disabled by default -->
+            <button id="hintButton">Hint</button>
         </div>
     </div>
 
