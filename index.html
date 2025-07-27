@@ -108,7 +108,7 @@
             <h1>Anime Wordle</h1>
             <div id="score">Score: 0</div>
             <div class="grid" id="gameGrid"></div>
-            <input type="text" id="guessInput" maxlength="5" placeholder="Enter 5-letter word" autofocus readonly onfocus="this.blur()">
+            <input type="text" id="guessInput" maxlength="5" placeholder="Enter 5-letter word" autofocus>
             <button id="guessButton">Guess</button>
             <button id="playAgainButton" style="display: none">Play Again</button>
             <p id="message"></p>
@@ -276,23 +276,40 @@
             const feedback = [];
             const secretList = secret.split('');
             let greenCount = 0;
+            // Count letters in secret and input
+            const secretCount = {};
+            const inputCount = {};
+            for (let i = 0; i < 5; i++) {
+                secretCount[secretList[i]] = (secretCount[secretList[i]] || 0) + 1;
+                inputCount[input[i]] = (inputCount[input[i]] || 0) + 1;
+            }
+            // First pass: Assign greens
             for (let i = 0; i < 5; i++) {
                 const tile = tiles[start + i];
                 if (input[i] === secretList[i]) {
                     feedback.push(`🟩 ${input[i]}`);
                     tile.className = 'tile green';
-                    secretList[i] = null;
-                    progress[i] = input[i]; // Update progress for all green matches
-                    greenCount++; // Increment green count for each match
-                } else if (secretList.includes(input[i])) {
-                    feedback.push(`🟨 ${input[i]}`);
-                    tile.className = 'tile yellow';
-                    secretList[secretList.indexOf(input[i])] = null;
+                    tile.textContent = input[i];
+                    secretCount[input[i]]--;
+                    progress[i] = input[i]; // Update progress for green matches
+                    greenCount++;
                 } else {
-                    feedback.push(`⬛ ${input[i]}`);
-                    tile.className = 'tile gray';
+                    tile.textContent = input[i];
                 }
-                tile.textContent = input[i];
+            }
+            // Second pass: Assign yellows or grays
+            for (let i = 0; i < 5; i++) {
+                const tile = tiles[start + i];
+                if (!feedback[i]) {
+                    if (secretCount[input[i]] > 0 && inputCount[input[i]] > (progress.filter(p => p === input[i]).length || 0)) {
+                        feedback.push(`🟨 ${input[i]}`);
+                        tile.className = 'tile yellow';
+                        secretCount[input[i]]--;
+                    } else {
+                        feedback.push(`⬛ ${input[i]}`);
+                        tile.className = 'tile gray';
+                    }
+                }
             }
             lastFeedback = feedback; // Store the latest feedback
             console.log(`Attempt ${attempts}, Green Count: ${greenCount}, Feedback: ${feedback.join(', ')}, Progress: ${progress.join(', ')}`);
