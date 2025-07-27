@@ -82,8 +82,36 @@
             button { font-size: 12px; padding: 5px 10px; margin: 5px; }
             #message { font-size: 16px; margin: 10px 0; }
             .keyboard { margin-top: 10px; width: 100%; text-align: center; }
-            .keyboard-row { gap: 3px; margin-bottom: 3px; display: inline-flex; justify-content: center; }
-            .key { width: 32px; height: 38px; line-height: 38px; font-size: 12px; }
+            .keyboard-row { display: flex; justify-content: center; gap: 2px; margin-bottom: 2px; }
+            .key { height: 38px; line-height: 38px; font-size: 12px; }
+            .key:nth-child(1) { width: 32px; } /* QWERTYUIOP */
+            .key:nth-child(2) { width: 32px; }
+            .key:nth-child(3) { width: 32px; }
+            .key:nth-child(4) { width: 32px; }
+            .key:nth-child(5) { width: 32px; }
+            .key:nth-child(6) { width: 32px; }
+            .key:nth-child(7) { width: 32px; }
+            .key:nth-child(8) { width: 32px; }
+            .key:nth-child(9) { width: 32px; }
+            .key:nth-child(10) { width: 32px; }
+            .key:nth-child(11) { width: 32px; } /* ASDFGHJKL */
+            .key:nth-child(12) { width: 32px; }
+            .key:nth-child(13) { width: 32px; }
+            .key:nth-child(14) { width: 32px; }
+            .key:nth-child(15) { width: 32px; }
+            .key:nth-child(16) { width: 32px; }
+            .key:nth-child(17) { width: 32px; }
+            .key:nth-child(18) { width: 32px; }
+            .key:nth-child(19) { width: 32px; }
+            .key:nth-child(20) { width: 40px; } /* ZXCVBNM Backspace Enter */
+            .key:nth-child(21) { width: 40px; }
+            .key:nth-child(22) { width: 40px; }
+            .key:nth-child(23) { width: 40px; }
+            .key:nth-child(24) { width: 40px; }
+            .key:nth-child(25) { width: 40px; }
+            .key:nth-child(26) { width: 40px; }
+            .key:nth-child(27) { width: 40px; } /* Backspace */
+            .key:nth-child(28) { width: 50px; } /* Enter */
             #score { font-size: 12px; margin: 10px; }
             .progress-area { 
                 position: fixed; 
@@ -219,20 +247,23 @@
             keyboardLayout.forEach(row => {
                 const rowDiv = document.createElement('div');
                 rowDiv.className = 'keyboard-row';
-                row.forEach(key => {
+                row.forEach((key, index) => {
                     const keyDiv = document.createElement('div');
                     keyDiv.className = 'key';
                     keyDiv.textContent = key;
                     if (key === 'Enter') {
+                        keyDiv.style.width = '50px'; // Wider Enter key
                         keyDiv.addEventListener('click', () => {
                             if (attempts < maxAttempts && !gameEnded) makeGuess();
                         });
                     } else if (key === 'Backspace') {
+                        keyDiv.style.width = '40px'; // Wider Backspace key
                         keyDiv.addEventListener('click', () => {
                             const input = document.getElementById('guessInput');
                             input.value = input.value.slice(0, -1);
                         });
                     } else {
+                        keyDiv.style.width = '32px'; // Standard key width
                         keyDiv.addEventListener('click', () => {
                             const input = document.getElementById('guessInput');
                             if (input.value.length < 5) {
@@ -371,3 +402,4 @@
     </script>
 </body>
 </html>
+```
