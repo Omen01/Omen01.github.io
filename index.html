@@ -83,7 +83,7 @@
             #message { font-size: 16px; margin: 10px 0; }
             .keyboard { margin-top: 10px; width: 100%; text-align: center; }
             .keyboard-row { gap: 3px; margin-bottom: 3px; display: inline-flex; justify-content: center; }
-            .key { width: 30px; height: 35px; line-height: 35px; font-size: 12px; }
+            .key { width: 32px; height: 38px; line-height: 38px; font-size: 12px; }
             #score { font-size: 12px; margin: 10px; }
             .progress-area { 
                 position: fixed; 
@@ -92,7 +92,6 @@
                 transform: translateX(-50%); 
                 width: 100%; 
                 text-align: center; 
-                background: #2c2f33; 
                 padding: 2px 0; 
                 margin: 0 auto; 
                 max-width: 150px; 
@@ -213,9 +212,10 @@
             const keyboardLayout = [
                 ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
                 ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
-                ['Z', 'X', 'C', 'V', 'B', 'N', 'M', 'Enter']
+                ['Z', 'X', 'C', 'V', 'B', 'N', 'M', 'Backspace', 'Enter']
             ];
             const keyboardDiv = document.getElementById('keyboard');
+            keyboardDiv.innerHTML = ''; // Clear existing keyboard
             keyboardLayout.forEach(row => {
                 const rowDiv = document.createElement('div');
                 rowDiv.className = 'keyboard-row';
@@ -226,6 +226,11 @@
                     if (key === 'Enter') {
                         keyDiv.addEventListener('click', () => {
                             if (attempts < maxAttempts && !gameEnded) makeGuess();
+                        });
+                    } else if (key === 'Backspace') {
+                        keyDiv.addEventListener('click', () => {
+                            const input = document.getElementById('guessInput');
+                            input.value = input.value.slice(0, -1);
                         });
                     } else {
                         keyDiv.addEventListener('click', () => {
@@ -245,7 +250,7 @@
         function updateKeyboard(guess, feedback) {
             guess.split('').forEach((letter, i) => {
                 const state = feedback[i].includes('🟩') ? 'green' : feedback[i].includes('🟨') ? 'yellow' : 'gray';
-                if (keyboard[letter.toUpperCase()].state === 'unset' || (state === 'green' && keyboard[letter.toUpperCase()].state !== 'green')) {
+                if (keyboard[letter.toUpperCase()] && (keyboard[letter.toUpperCase()].state === 'unset' || (state === 'green' && keyboard[letter.toUpperCase()].state !== 'green'))) {
                     keyboard[letter.toUpperCase()].element.className = `key ${state}`;
                     keyboard[letter.toUpperCase()].state = state;
                 }
