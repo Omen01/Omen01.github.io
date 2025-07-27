@@ -74,17 +74,16 @@
                 width: 80%; 
                 margin: 0 auto; 
                 text-align: center; 
+                min-height: 80vh; /* Ensure game grid space on mobile */
             }
-            .grid { 
-                grid-template-columns: repeat(5, 40px); margin: 10px 0; min-height: 240px; /* Ensure grid height to display squares */
-            }
+            .grid { grid-template-columns: repeat(5, 40px); margin: 10px 0; min-height: 240px; } /* Ensure grid height to display squares */
             .tile { width: 40px; height: 40px; line-height: 40px; font-size: 16px; }
-            #guessInput { font-size: 16px; margin: 10px; max-width: 50vw; }
+            #guessInput { font-size: 16px; margin: 10px; max-width: 50vw; readonly onfocus="this.blur()" } /* Disable phone keyboard */
             button { font-size: 12px; padding: 5px 10px; margin: 5px; }
             #message { font-size: 16px; margin: 10px 0; }
             .keyboard { margin-top: 10px; width: 100%; text-align: center; }
-            .keyboard-row { gap: 2px; margin-bottom: 2px; display: inline-flex; justify-content: center; }
-            .key { width: 25px; height: 30px; line-height: 30px; font-size: 12px; }
+            .keyboard-row { gap: 3px; margin-bottom: 3px; display: inline-flex; justify-content: center; }
+            .key { width: 30px; height: 35px; line-height: 35px; font-size: 12px; }
             #score { font-size: 12px; margin: 10px; }
             .progress-area { 
                 position: fixed; 
@@ -94,9 +93,9 @@
                 width: 100%; 
                 text-align: center; 
                 background: #2c2f33; 
-                padding: 5px 0; 
+                padding: 2px 0; 
                 margin: 0 auto; 
-                max-width: 160px; 
+                max-width: 150px; 
             }
             .progress-grid { grid-template-columns: repeat(5, 30px); }
             .progress-tile { width: 30px; height: 30px; line-height: 30px; font-size: 12px; }
@@ -110,7 +109,7 @@
             <h1>Anime Wordle</h1>
             <div id="score">Score: 0</div>
             <div class="grid" id="gameGrid"></div>
-            <input type="text" id="guessInput" maxlength="5" placeholder="Enter 5-letter word" autofocus>
+            <input type="text" id="guessInput" maxlength="5" placeholder="Enter 5-letter word" autofocus readonly onfocus="this.blur()">
             <button id="guessButton">Guess</button>
             <button id="playAgainButton" style="display: none">Play Again</button>
             <p id="message"></p>
@@ -214,7 +213,7 @@
             const keyboardLayout = [
                 ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
                 ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
-                ['Z', 'X', 'C', 'V', 'B', 'N', 'M']
+                ['Z', 'X', 'C', 'V', 'B', 'N', 'M', 'Enter']
             ];
             const keyboardDiv = document.getElementById('keyboard');
             keyboardLayout.forEach(row => {
@@ -224,6 +223,18 @@
                     const keyDiv = document.createElement('div');
                     keyDiv.className = 'key';
                     keyDiv.textContent = key;
+                    if (key === 'Enter') {
+                        keyDiv.addEventListener('click', () => {
+                            if (attempts < maxAttempts && !gameEnded) makeGuess();
+                        });
+                    } else {
+                        keyDiv.addEventListener('click', () => {
+                            const input = document.getElementById('guessInput');
+                            if (input.value.length < 5) {
+                                input.value += key;
+                            }
+                        });
+                    }
                     keyboard[key] = { element: keyDiv, state: 'unset' }; // Track state
                     rowDiv.appendChild(keyDiv);
                 });
