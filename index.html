@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Anime Wordle</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Viewport meta tag -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body { 
             font-family: Arial, sans-serif; 
@@ -12,7 +12,7 @@
             background: #2c2f33; 
             display: flex; 
             justify-content: center; 
-            padding-left: 410px; /* Desktop padding */
+            padding-left: 410px;
         }
         .container { 
             display: flex; 
@@ -28,11 +28,11 @@
             align-items: center; 
             width: 60%; 
             max-width: 600px; 
-            min-height: 100%; /* Ensure content displays on desktop */
+            min-height: 100%;
         }
         .grid { 
             display: grid; 
-            grid-template-columns: repeat(5, 50px); /* Fixed size for desktop */
+            grid-template-columns: repeat(5, 50px);
             gap: 5px; 
             margin: 20px 0; 
         }
@@ -43,7 +43,8 @@
             text-align: center; 
             line-height: 50px; 
             font-size: 20px; 
-            opacity: 1; /* Ensure full opacity */
+            opacity: 1;
+            color: black; /* Ensure text stays black */
         }
         .green { background: #6aaa64; color: white; border-color: #6aaa64; opacity: 1; }
         .yellow { background: #c9b458; color: white; border-color: #c9b458; opacity: 1; }
@@ -63,9 +64,8 @@
         .progress-tile { width: 50px; height: 50px; border: 2px solid #ccc; text-align: center; line-height: 50px; font-size: 20px; background: #444; color: white; }
         #hintButton:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        /* Media query for mobile devices (e.g., max-width: 768px) */
         @media (max-width: 768px) {
-            body { padding-left: 0; } /* Remove padding on mobile */
+            body { padding-left: 0; }
             .container { 
                 display: block; 
                 width: 100%; 
@@ -75,11 +75,11 @@
                 width: 80%; 
                 margin: 0 auto; 
                 text-align: center; 
-                min-height: 80vh; /* Ensure game grid space on mobile */
+                min-height: 80vh;
             }
-            .grid { grid-template-columns: repeat(5, 40px); margin: 10px 0; min-height: 240px; } /* Ensure grid height to display squares */
+            .grid { grid-template-columns: repeat(5, 40px); margin: 10px 0; min-height: 240px; }
             .tile { width: 40px; height: 40px; line-height: 40px; font-size: 16px; }
-            #guessInput { font-size: 16px; margin: 10px; max-width: 50vw; readonly onfocus="this.blur()" } /* Disable phone keyboard */
+            #guessInput { font-size: 16px; margin: 10px; max-width: 50vw; readonly onfocus="this.blur()" }
             button { font-size: 12px; padding: 5px 10px; margin: 5px; }
             #message { font-size: 16px; margin: 10px 0; }
             .keyboard { margin-top: 10px; width: 100%; text-align: center; }
@@ -131,14 +131,13 @@
         let maxAttempts = 6;
         let message = null;
         let keyboard = {};
-        let score = 0; // Track consecutive wins
-        let gameEnded = false; // Flag to track game end state
-        let progress = ['', '', '', '', '']; // Track progress for each position
-        let hintsUsed = 0; // Track number of hints used
-        let lastFeedback = []; // Store the latest feedback for hint logic
-        let lastInput = ''; // Store the latest input for fade check
+        let score = 0;
+        let gameEnded = false;
+        let progress = ['', '', '', '', ''];
+        let hintsUsed = 0;
+        let lastFeedback = [];
+        let lastInput = '';
 
-        // Fetch words.txt and initialize game
         fetch('words.txt')
             .then(response => {
                 if (!response.ok) throw new Error('Network response was not ok');
@@ -156,23 +155,24 @@
                 grid = document.getElementById('gameGrid');
                 progressGrid = document.getElementById('progressGrid');
                 message = document.getElementById('message');
-                document.getElementById('score').textContent = `Score: ${score}`; // Initialize score display
+                document.getElementById('score').textContent = `Score: ${score}`;
                 createGrid();
                 createProgressGrid();
                 createKeyboard();
-                // Add event listeners
                 document.getElementById('guessInput').addEventListener('keyup', (event) => {
-                    if (event.key === 'Enter' && attempts < maxAttempts && !gameEnded) makeGuess(); // Enter for guessing
+                    if (event.key === 'Enter' && attempts < maxAttempts && !gameEnded) makeGuess();
                 });
                 document.getElementById('guessButton').addEventListener('click', makeGuess);
                 document.getElementById('playAgainButton').addEventListener('click', playAgain);
                 document.getElementById('hintButton').addEventListener('click', getHint);
-                // Add Shift+Enter for Play Again after game end
                 document.addEventListener('keydown', (event) => {
                     const playAgainButton = document.getElementById('playAgainButton');
                     if (event.key === 'Enter' && event.shiftKey && playAgainButton.style.display === 'block' && !document.getElementById('guessInput').value) {
                         playAgain();
-                        event.preventDefault(); // Prevent default Enter behavior
+                        event.preventDefault();
+                    } else if (event.key.toLowerCase() === 'r' && event.shiftKey && !gameEnded) {
+                        getHint();
+                        event.preventDefault();
                     }
                 });
             })
@@ -187,7 +187,7 @@
                 console.error('Grid element not found');
                 return;
             }
-            grid.innerHTML = ''; // Clear previous grid
+            grid.innerHTML = '';
             for (let i = 0; i < maxAttempts * 5; i++) {
                 const tile = document.createElement('div');
                 tile.className = 'tile';
@@ -200,7 +200,7 @@
                 console.error('Progress grid element not found');
                 return;
             }
-            progressGrid.innerHTML = ''; // Clear previous progress grid
+            progressGrid.innerHTML = '';
             for (let i = 0; i < 5; i++) {
                 const tile = document.createElement('div');
                 tile.className = 'progress-tile';
@@ -216,7 +216,7 @@
                 ['Z', 'X', 'C', 'V', 'B', 'N', 'M', 'Backspace', 'Enter']
             ];
             const keyboardDiv = document.getElementById('keyboard');
-            keyboardDiv.innerHTML = ''; // Clear existing keyboard
+            keyboardDiv.innerHTML = '';
             keyboardLayout.forEach(row => {
                 const rowDiv = document.createElement('div');
                 rowDiv.className = 'keyboard-row';
@@ -225,18 +225,18 @@
                     keyDiv.className = 'key';
                     keyDiv.textContent = key;
                     if (key === 'Enter') {
-                        keyDiv.style.width = '50px'; // Wider Enter key
+                        keyDiv.style.width = '50px';
                         keyDiv.addEventListener('click', () => {
                             if (attempts < maxAttempts && !gameEnded) makeGuess();
                         });
                     } else if (key === 'Backspace') {
-                        keyDiv.style.width = '40px'; // Wider Backspace key
+                        keyDiv.style.width = '40px';
                         keyDiv.addEventListener('click', () => {
                             const input = document.getElementById('guessInput');
                             input.value = input.value.slice(0, -1);
                         });
                     } else {
-                        keyDiv.style.width = '32px'; // Standard key width
+                        keyDiv.style.width = '32px';
                         keyDiv.addEventListener('click', () => {
                             const input = document.getElementById('guessInput');
                             if (input.value.length < 5) {
@@ -244,7 +244,7 @@
                             }
                         });
                     }
-                    keyboard[key] = { element: keyDiv, state: 'unset' }; // Track state
+                    keyboard[key] = { element: keyDiv, state: 'unset' };
                     rowDiv.appendChild(keyDiv);
                 });
                 keyboardDiv.appendChild(rowDiv);
@@ -267,7 +267,7 @@
                 return;
             }
             const input = document.getElementById('guessInput').value.toUpperCase();
-            lastInput = input; // Store the latest input
+            lastInput = input;
             if (input.length !== 5 || !words.includes(input)) {
                 message.textContent = 'Guess an actual word next time...';
                 return;
@@ -277,28 +277,23 @@
             const feedback = [];
             const secretList = secret.split('');
             let greenCount = 0;
-            // Count letters in secret and input
             const secretCount = {};
             const inputCount = {};
             for (let i = 0; i < 5; i++) {
                 secretCount[secretList[i]] = (secretCount[secretList[i]] || 0) + 1;
                 inputCount[input[i]] = (inputCount[input[i]] || 0) + 1;
             }
-            // First pass: Assign greens
             for (let i = 0; i < 5; i++) {
                 const tile = tiles[start + i];
+                tile.textContent = input[i];
                 if (input[i] === secretList[i]) {
                     feedback.push(`🟩 ${input[i]}`);
                     tile.className = 'tile green';
-                    tile.textContent = input[i];
                     secretCount[input[i]]--;
-                    progress[i] = input[i]; // Update progress for green matches
+                    progress[i] = input[i];
                     greenCount++;
-                } else {
-                    tile.textContent = input[i];
                 }
             }
-            // Second pass: Assign yellows or grays, skipping if already in progress
             for (let i = 0; i < 5; i++) {
                 const tile = tiles[start + i];
                 if (!feedback[i] && !progress.includes(input[i])) {
@@ -312,30 +307,30 @@
                     }
                 }
             }
-            lastFeedback = feedback; // Store the latest feedback
-            console.log(`Attempt ${attempts}, Green Count: ${greenCount}, Feedback: ${feedback.join(', ')}, Progress: ${progress.join(', ')}`);
+            lastFeedback = feedback;
             updateKeyboard(input, feedback);
             updateProgressGrid();
             attempts++;
             updateHintButton(greenCount);
             if (input === secret) {
                 message.textContent = `Actual Dweeb! You got the answer ${secret}. Attempts: ${attempts}`;
-                score++; // Increment score on win
+                score++;
                 document.getElementById('score').textContent = `Score: ${score}`;
-                gameEnded = true; // Set game end flag
-                progress = secret.split(''); // Autofill progress with full word
+                gameEnded = true;
+                progress = secret.split('');
                 updateProgressGrid();
                 document.getElementById('playAgainButton').style.display = 'block';
             } else if (attempts === maxAttempts) {
                 message.textContent = `LOL! Try again next time! Word was ${secret}`;
-                score = 0; // Reset score on loss
+                score = 0;
                 document.getElementById('score').textContent = `Score: ${score}`;
-                gameEnded = true; // Set game end flag
-                progress = secret.split(''); // Autofill progress with full word
+                gameEnded = true;
+                progress = secret.split('');
                 updateProgressGrid();
                 document.getElementById('playAgainButton').style.display = 'block';
             }
-            document.getElementById('guessInput').value = '';
+            document.getElementById('guessInput').value = ''; // Clear input after guess
+            document.getElementById('guessInput').focus(); // Refocus input
         }
 
         function updateProgressGrid() {
@@ -346,7 +341,7 @@
         }
 
         function getHint() {
-            if (gameEnded || !secret || hintsUsed >= 2 || !lastFeedback.length) return; // Limit to 2 hints and require a guess
+            if (gameEnded || !secret || hintsUsed >= 2 || !lastFeedback.length) return;
             const yellows = lastFeedback.filter(f => f.includes('🟨')).map(f => ({ letter: f.split(' ')[1], index: lastFeedback.indexOf(f) }));
             if (yellows.length > 0) {
                 const { letter, index } = yellows[Math.floor(Math.random() * yellows.length)];
@@ -355,39 +350,39 @@
                     progress[correctIndex] = letter;
                     updateProgressGrid();
                     hintsUsed++;
-                    updateHintButton(); // Update button state after using hint
+                    updateHintButton();
+                    document.getElementById('guessInput').focus(); // Refocus input after hint
                 }
             }
         }
 
         function updateHintButton(greenCount) {
             const hintButton = document.getElementById('hintButton');
-            console.log(`Attempts: ${attempts}, Green Count: ${greenCount}, Hints Used: ${hintsUsed}, Game Ended: ${gameEnded}`);
             if (!gameEnded && hintsUsed < 2 && greenCount < 3) {
-                hintButton.disabled = false; // Enable hint if less than 3 greens and not maxed out
+                hintButton.disabled = false;
             } else {
-                hintButton.disabled = true; // Disable if 3+ greens, max hints, or game ended
+                hintButton.disabled = true;
             }
         }
 
         function playAgain() {
             attempts = 0;
-            gameEnded = false; // Reset game end flag
+            gameEnded = false;
             secret = words[Math.floor(Math.random() * words.length)];
             message.textContent = 'New game started! Good Luck, Degen.';
             document.getElementById('playAgainButton').style.display = 'none';
-            progress = ['', '', '', '', '']; // Reset progress
-            hintsUsed = 0; // Reset hints
-            lastFeedback = []; // Reset last feedback
-            lastInput = ''; // Reset last input
+            progress = ['', '', '', '', ''];
+            hintsUsed = 0;
+            lastFeedback = [];
+            lastInput = '';
             createGrid();
-            updateProgressGrid(); // Reset progress grid
-            // Reset keyboard states
+            updateProgressGrid();
             for (let key in keyboard) {
                 keyboard[key].state = 'unset';
                 keyboard[key].element.className = 'key';
             }
-            document.getElementById('hintButton').disabled = false; // Enable hint at start
+            document.getElementById('hintButton').disabled = false;
+            document.getElementById('guessInput').focus(); // Refocus input on new game
         }
     </script>
 </body>
