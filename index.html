@@ -43,10 +43,11 @@
             text-align: center; 
             line-height: 50px; 
             font-size: 20px; 
+            opacity: 1; /* Ensure full opacity */
         }
-        .green { background: #6aaa64; color: white; border-color: #6aaa64; }
-        .yellow { background: #c9b458; color: white; border-color: #c9b458; }
-        .gray { background: #787c7e; color: white; border-color: #787c7e; }
+        .green { background: #6aaa64; color: white; border-color: #6aaa64; opacity: 1; }
+        .yellow { background: #c9b458; color: white; border-color: #c9b458; opacity: 1; }
+        .gray { background: #787c7e; color: white; border-color: #787c7e; opacity: 1; }
         #guessInput { margin: 10px; padding: 5px; font-size: 16px; }
         button { padding: 5px 10px; font-size: 16px; margin: 5px; }
         #message { color: white; margin: 20px 0; font-size: 24px; font-weight: bold; text-align: center; }
@@ -297,10 +298,10 @@
                     tile.textContent = input[i];
                 }
             }
-            // Second pass: Assign yellows or grays
+            // Second pass: Assign yellows or grays, skipping if already in progress
             for (let i = 0; i < 5; i++) {
                 const tile = tiles[start + i];
-                if (!feedback[i]) {
+                if (!feedback[i] && !progress.includes(input[i])) {
                     if (secretCount[input[i]] > 0 && inputCount[input[i]] > (progress.filter(p => p === input[i]).length || 0)) {
                         feedback.push(`🟨 ${input[i]}`);
                         tile.className = 'tile yellow';
