@@ -45,7 +45,7 @@
             font-size: 20px; 
             opacity: 1;
             color: black;
-            background: white; /* Ensure default background */
+            background: white;
         }
         .green { background: #6aaa64; color: white; border-color: #6aaa64; opacity: 1; }
         .yellow { background: #c9b458; color: white; border-color: #c9b458; opacity: 1; }
@@ -296,17 +296,22 @@
                     progress[i] = input[i];
                     greenCount++;
                 } else {
-                    feedback.push(null); // Placeholder for non-green tiles
+                    feedback.push(null);
                 }
             }
             // Second pass: Assign yellows or grays
             for (let i = 0; i < 5; i++) {
                 const tile = tiles[start + i];
-                if (!feedback[i]) { // Only process non-green tiles
-                    if (secretCount[input[i]] > 0) {
-                        feedback[i] = `🟨 ${input[i]}`;
-                        tile.className = 'tile yellow';
-                        secretCount[input[i]]--;
+                if (!feedback[i]) {
+                    if (!progress.includes(input[i])) {
+                        if (secretCount[input[i]] > 0 && inputCount[input[i]] > (progress.filter(p => p === input[i]).length || 0)) {
+                            feedback[i] = `🟨 ${input[i]}`;
+                            tile.className = 'tile yellow';
+                            secretCount[input[i]]--;
+                        } else {
+                            feedback[i] = `⬛ ${input[i]}`;
+                            tile.className = 'tile gray';
+                        }
                     } else {
                         feedback[i] = `⬛ ${input[i]}`;
                         tile.className = 'tile gray';
@@ -314,6 +319,7 @@
                 }
             }
             lastFeedback = feedback;
+            console.log(`Attempt ${attempts}, Green Count: ${greenCount}, Feedback: ${feedback.join(', ')}, Progress: ${progress.join(', ')}`);
             updateKeyboard(input, feedback);
             updateProgressGrid();
             attempts++;
@@ -335,8 +341,8 @@
                 updateProgressGrid();
                 document.getElementById('playAgainButton').style.display = 'block';
             }
-            document.getElementById('guessInput').value = ''; // Clear input
-            document.getElementById('guessInput').focus(); // Refocus input
+            document.getElementById('guessInput').value = '';
+            document.getElementById('guessInput').focus();
         }
 
         function updateProgressGrid() {
@@ -350,9 +356,15 @@
             if (gameEnded || !secret || hintsUsed >= 2 || !lastFeedback.length) return;
             const yellows = lastFeedback.filter(f => f && f.includes('🟨')).map(f => ({ letter: f.split(' ')[1], index: lastFeedback.indexOf(f) }));
             if (yellows.length > 0) {
-                const { letter, index } = yellows[Math.floor(Math.random() * yellows.length)];
-                const correctIndex = secret.indexOf(letter);
-                if (progress[correctIndex] === '') {
+                const { letter } = yellows[Math.floor(Math.random() * yellows.length)];
+                const possiblePositions = [];
+                for (let j = 0; j < 5; j++) {
+                    if (secret[j] === letter && progress[j] === '') {
+                        possiblePositions.push(j);
+                    }
+                }
+                if (possiblePositions.length > 0) {
+                    const correctIndex = possiblePositions[Math.floor(Math.random() * possiblePositions.length)];
                     progress[correctIndex] = letter;
                     updateProgressGrid();
                     hintsUsed++;
