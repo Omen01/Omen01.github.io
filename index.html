@@ -44,7 +44,8 @@
             line-height: 50px; 
             font-size: 20px; 
             opacity: 1;
-            color: black; /* Ensure text stays black */
+            color: black;
+            background: white; /* Ensure default background */
         }
         .green { background: #6aaa64; color: white; border-color: #6aaa64; opacity: 1; }
         .yellow { background: #c9b458; color: white; border-color: #c9b458; opacity: 1; }
@@ -270,6 +271,7 @@
             lastInput = input;
             if (input.length !== 5 || !words.includes(input)) {
                 message.textContent = 'Guess an actual word next time...';
+                document.getElementById('guessInput').focus();
                 return;
             }
             const tiles = grid.children;
@@ -283,6 +285,7 @@
                 secretCount[secretList[i]] = (secretCount[secretList[i]] || 0) + 1;
                 inputCount[input[i]] = (inputCount[input[i]] || 0) + 1;
             }
+            // First pass: Assign greens and set all tiles' text
             for (let i = 0; i < 5; i++) {
                 const tile = tiles[start + i];
                 tile.textContent = input[i];
@@ -292,17 +295,20 @@
                     secretCount[input[i]]--;
                     progress[i] = input[i];
                     greenCount++;
+                } else {
+                    feedback.push(null); // Placeholder for non-green tiles
                 }
             }
+            // Second pass: Assign yellows or grays
             for (let i = 0; i < 5; i++) {
                 const tile = tiles[start + i];
-                if (!feedback[i] && !progress.includes(input[i])) {
-                    if (secretCount[input[i]] > 0 && inputCount[input[i]] > (progress.filter(p => p === input[i]).length || 0)) {
-                        feedback.push(`🟨 ${input[i]}`);
+                if (!feedback[i]) { // Only process non-green tiles
+                    if (secretCount[input[i]] > 0) {
+                        feedback[i] = `🟨 ${input[i]}`;
                         tile.className = 'tile yellow';
                         secretCount[input[i]]--;
                     } else {
-                        feedback.push(`⬛ ${input[i]}`);
+                        feedback[i] = `⬛ ${input[i]}`;
                         tile.className = 'tile gray';
                     }
                 }
@@ -329,7 +335,7 @@
                 updateProgressGrid();
                 document.getElementById('playAgainButton').style.display = 'block';
             }
-            document.getElementById('guessInput').value = ''; // Clear input after guess
+            document.getElementById('guessInput').value = ''; // Clear input
             document.getElementById('guessInput').focus(); // Refocus input
         }
 
@@ -342,7 +348,7 @@
 
         function getHint() {
             if (gameEnded || !secret || hintsUsed >= 2 || !lastFeedback.length) return;
-            const yellows = lastFeedback.filter(f => f.includes('🟨')).map(f => ({ letter: f.split(' ')[1], index: lastFeedback.indexOf(f) }));
+            const yellows = lastFeedback.filter(f => f && f.includes('🟨')).map(f => ({ letter: f.split(' ')[1], index: lastFeedback.indexOf(f) }));
             if (yellows.length > 0) {
                 const { letter, index } = yellows[Math.floor(Math.random() * yellows.length)];
                 const correctIndex = secret.indexOf(letter);
@@ -351,7 +357,7 @@
                     updateProgressGrid();
                     hintsUsed++;
                     updateHintButton();
-                    document.getElementById('guessInput').focus(); // Refocus input after hint
+                    document.getElementById('guessInput').focus();
                 }
             }
         }
@@ -382,7 +388,7 @@
                 keyboard[key].element.className = 'key';
             }
             document.getElementById('hintButton').disabled = false;
-            document.getElementById('guessInput').focus(); // Refocus input on new game
+            document.getElementById('guessInput').focus();
         }
     </script>
 </body>
